@@ -15,12 +15,13 @@ export default async (req, res) => {
   }
 };
 
+//register 유효성 검사
 const register = async (req, res) => {
   try {
     const { name, email, password, cf_password } = req.body;
 
     const errMsg = valid(name, email, password, cf_password);
-    if (errMsg) return res.status(400).json({err: errMsg});
+    if (errMsg) return res.status(400).json({ err: errMsg });
 
     const user = await Users.findOne({ email });
     if (user) return res.status(400).json({err: 'This email already exists.'});
@@ -32,10 +33,10 @@ const register = async (req, res) => {
     });
     
     await newUser.save();
-    res.json({msg: "Register Success!"});
+    res.json({ msg: "Register Success!" });
 
   } catch (err) {
 
-    return res.status(500).json({err: err.message});
+    return res.status(500).json({ err: err.message });
   }
 };

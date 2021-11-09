@@ -24,8 +24,8 @@ const signin = () => {
 
         {/* primary >> dark*/}
         <button type="submit" className="btn btn-dark w-100">Login</button>
-        <p>You don't have an account?
-          <Link href="/register"><a style={{ color: "blue" }}> Register</a></Link>
+        <p className="my-2">You don't have an account?
+          <Link href="/register"><a style={{ color: "blue" }}> Register Now</a></Link>
         </p>
       </form>    
 

@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import valid from '../utils/valid';
+import { DataContext } from '../store/globalState';
+import { TYPES } from '../store/types';
+import { postData } from '../utils/fetchData';
 
 const Register = () => {
   const initialState = { name: '', email: '', password: '', cf_password: '' };
   const [userData, setUserData] = useState(initialState);
   const { name, email, password, cf_password } = userData;
+
+  const [state, dispatch] = useContext(DataContext);
+
+
 
   const onChangeInput = (e) => {
     const { name, value } = e.currentTarget; //input속성 target
@@ -14,11 +21,23 @@ const Register = () => {
     // ex) 이메일 제출시 > "email": userData.eamil
   };
 
-  const onSubmit = (e) => {
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const errMsg = valid(name, email, password, cf_password);
-    if (errMsg) console.log(errMsg);
+    const errMsg = valid(name, email, password, cf_password);// 유효성 실패 응답(errMsg)
+    if (errMsg) return dispatch({ type: TYPES.NOTIFY, payload: { error: errMsg } });
+
+    //loading 
+    dispatch({ type: TYPES.NOTIFY, payload: { loading: true } });
+
+    // fetchData에게 전달후 응답 받아오기
+    const res = await postData('auth/register', userData);// 유저등록 실패, 성공 응답(res)
+    if (res.err) return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
+
+    //success
+    return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
   };
+
 
   return (
     <>
