@@ -11,7 +11,7 @@ const Register = () => {
   const [userData, setUserData] = useState(initialState);
   const { name, email, password, cf_password } = userData;
 
-  const [state, dispatch] = useContext(DataContext);
+  const {state, dispatch} = useContext(DataContext);
 
 
 
@@ -19,6 +19,10 @@ const Register = () => {
     const { name, value } = e.currentTarget; //input속성 target
     setUserData({ ...userData, [name]: value });
     // ex) 이메일 제출시 > "email": userData.eamil
+
+    //토스트 메세지 초기화
+    dispatch({ type: TYPES.NOTIFY, payload: {} });
+
   };
 
 
@@ -75,8 +79,9 @@ const Register = () => {
           <input type="password" className="form-control" id="exampleInputPassword2" name="cf_password" value={cf_password} onChange={onChangeInput} />
         </div>
 
+        {/* 가입 버튼 */}
         {/* primary >> dark*/}
-        <button type="submit" className="btn btn-dark w-100">Register</button>
+        <button type="submit" className="btn btn-primary w-100">Register</button>
         <p className="my-2">Already have an account?
           <Link href="/signin"><a style={{ color: "blue" }}> Login Now</a></Link>
         </p>

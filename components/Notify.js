@@ -7,7 +7,7 @@ import { TYPES } from "../store/types";
 import React from 'react';
 
 const Notify = () => {
-  const [state, dispatch] = useContext(DataContext);//global state
+  const {state, dispatch} = useContext(DataContext);//global state
   const { notify } = state;
 
   return (
