@@ -1,3 +1,4 @@
+/* ------------- next 기본 css ------------- */
 html,
 body {
   padding: 0;
@@ -14,3 +15,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+/* ------------- Loading  ------------- */
+@import url("./loading.css");
