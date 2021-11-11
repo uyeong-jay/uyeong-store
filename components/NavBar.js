@@ -8,7 +8,7 @@ import { TYPES } from '../store/types';
 const NavBar = () => {
   const router = useRouter();
   //pathname(string): 현재경로
-  const isActive = rt => rt === router.pathname ? " active" :  "";
+  const isActive = (rt) => rt === router.pathname ? "active" :  "";
 
   const {state, dispatch} = useContext(DataContext);
   const { auth } = state;
@@ -39,7 +39,7 @@ const NavBar = () => {
 
           {/* Cart */}
           {/* isActive(): " active" or "" */}
-          <li className={"nav-item" + isActive('/cart')}>
+          <li className={`nav-item ${isActive('/cart')}`}>
             <Link href="/cart">
               {/* font awesome - cart (+ aria-hidden ) */}
               <a className="nav-link"><i className="fas fa-shopping-cart" aria-hidden="true"></i> Cart</a>
@@ -67,7 +67,7 @@ const NavBar = () => {
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <a className="dropdown-item" href="#">Profile</a>
-                  <button className="dropdown-item" onClick={onClickLogout}>Logout</button>
+                  <button className="dropdown-item" type="button" onClick={onClickLogout}>Logout</button>
                 </div>
               </li>
             )

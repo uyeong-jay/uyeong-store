@@ -26,8 +26,10 @@ const Home = (props) => {
 
 //Server Side rendering
 export async function getServerSideProps() {
+  
   const res = await getData('product'); 
   // console.log(res); //서버측 렌더링이기 때문에 console이 아닌 터미널에 찍힘
+
   return {
     props: {
       products: res.products,

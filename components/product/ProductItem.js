@@ -2,6 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 
 const ProductItem = ({ product }) => {
+  const userLink = () => {
+    return (
+      <>
+        <Link href={`/product/${product._id}`}>
+          <a className="btn btn-info" style={{marginRight: '5px', flex: 1}}>View</a>
+        </Link>
+        <button type="button" className="btn btn-success" style={{ marginLeft: '5px', flex: 1 }}>Buy</button>
+      </>
+    );
+  };
+
+
   return (
     // 부트스트랩 4 - card
     // class, style >> className, style={{}}
@@ -30,10 +42,7 @@ const ProductItem = ({ product }) => {
 
         {/* button (+ 양쪽으로 배치) */}
         <div className="row justify-content-between mx-0">
-          <Link href={`product/${product._id}`}>
-            <a className="btn btn-info" style={{ marginRight: '5px', flex: 1 }}>View</a>
-          </Link>
-          <button className="btn btn-success" style={{ marginLeft: '5px', flex: 1 }}>Buy</button>
+          {userLink()}
         </div>
 
       </div>
