@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import valid from '../utils/valid';
 import { DataContext } from '../store/globalState';
 import { TYPES } from '../store/types';
@@ -12,7 +13,9 @@ const Register = () => {
   const { name, email, password, cf_password } = userData;
 
   const {state, dispatch} = useContext(DataContext);
+  const { auth } = state;
 
+  const router = useRouter();
 
 
   const onChangeInput = (e) => {
@@ -41,6 +44,10 @@ const Register = () => {
     //success
     return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
   };
+
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0) router.push("/");
+  },[auth]);
 
 
   return (

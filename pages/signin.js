@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie';
 import { DataContext } from '../store/globalState';
 import { TYPES } from '../store/types';
 import { postData } from '../utils/fetchData';
-import Cookie from 'js-cookie';
 
 const signin = () => {
   const initialState = { email: '', password: '' };
@@ -12,8 +13,11 @@ const signin = () => {
   const { email, password } = userData;
 
   const {state, dispatch} = useContext(DataContext);
+  const { auth } = state;
 
+  const router = useRouter();
 
+  
 
   const onChangeInput = (e) => {
     const { name, value } = e.currentTarget; //input속성 target
@@ -40,22 +44,28 @@ const signin = () => {
     dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
 
 
-    //token && user정보 auth에 넣기
+    //accesstoken && user정보 auth에 넣기
     dispatch({ type: TYPES.AUTH, payload: {
       token: res.access_token,
       user: res.user
     } });
 
     
-
-    Cookie.set('refreshtoken', res.refresh_token, {
+    //refreshtoken을 Cookie에 저장
+    Cookies.set('refreshtoken', res.refresh_token, {
       path: 'api/auth/accessToken',
       expires: 7
     });
 
+
     //위 과정이 다끝나면 localStorage에 표기
     return localStorage.setItem('firstLogin',  true);
   };
+
+
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0) router.push("/");
+  },[auth]);
 
 
   return (
