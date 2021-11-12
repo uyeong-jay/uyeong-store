@@ -10,15 +10,17 @@ const NavBar = () => {
   //pathname(string): 현재경로
   const isActive = (rt) => rt === router.pathname ? "active" :  "";
 
-  const {state, dispatch} = useContext(DataContext);
-  const { auth } = state;
+  const { state, dispatch } = useContext(DataContext);
+  const { auth, cart } = state;
+  console.log(auth.user);
 
 
+  //로그아웃: 유저의 쿠키, 스토리지, 인증정보 초기화 후 성공 메세지
   const onClickLogout = () => {
     Cookies.remove('refreshtoken', { path: 'api/auth/accessToken' });
     localStorage.removeItem('firstLogin');
     dispatch({ type: TYPES.AUTH, payload: {} });
-    dispatch({ type: TYPES.NOTIFY, payload: { success: 'Logged out!' } })
+    dispatch({ type: TYPES.NOTIFY, payload: { success: 'Logged out!' } });
   };
 
   return (
@@ -35,14 +37,30 @@ const NavBar = () => {
 
       <div className="collapse navbar-collapse" id="navbarNavDropdown" style={{ justifyContent: 'end' }}>
 
-        <ul className="navbar-nav">
+        <ul className="navbar-nav p-1">
 
           {/* Cart */}
           {/* isActive(): " active" or "" */}
           <li className={`nav-item ${isActive('/cart')}`}>
             <Link href="/cart">
               {/* font awesome - cart (+ aria-hidden ) */}
-              <a className="nav-link"><i className="fas fa-shopping-cart" aria-hidden="true"></i> Cart</a>
+              <a className="nav-link">
+                <i className="fas fa-shopping-cart" aria-hidden="true"
+                style={{ position: 'relative' }}>
+                  <span
+                    style={{ 
+                      position: 'absolute',
+                      top: '-10px',
+                      right: '-10px',
+                      padding: '3px 6px',
+                      background: '#ed143dc2',
+                      borderRadius: '50%',
+                      color: 'white',
+                      fontSize: '14px'
+                    }}
+                  >{cart.length}</span>
+                </i> Cart
+              </a>
             </Link>
           </li>
 
@@ -50,7 +68,7 @@ const NavBar = () => {
             //Object.keys(obj): obj의 key들만 모아서 배열로 반환
             Object.keys(auth).length === 0 //인증 정보 유무
             ? (
-              // Sign-in 
+              //인증 전: Sign-in 
               <li className={"nav-item" + isActive('/signin')}>
                 <Link href="/signin">
                   {/* font awesome - user (+ aria-hidden )*/}
@@ -58,15 +76,20 @@ const NavBar = () => {
                 </Link>
               </li>
             ) : (
-              // Dropdown-menu
+              //인증 후: Dropdown-menu
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {/* user image */}
                   <img src={auth.user.avatar} alt={auth.user.avatar} 
                   style={{ width: '20px', height: '20px', marginRight: '4px', marginBottom: '3px'}} />
+                  {/* user name */}
                   {auth.user.name}
                 </a>
+
                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  {/* Profile */}
                   <a className="dropdown-item" href="#">Profile</a>
+                  {/* Logout */}
                   <button className="dropdown-item" type="button" onClick={onClickLogout}>Logout</button>
                 </div>
               </li>
