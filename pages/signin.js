@@ -7,7 +7,7 @@ import { DataContext } from '../store/globalState';
 import { TYPES } from '../store/types';
 import { postData } from '../utils/fetchData';
 
-const signin = () => {
+const Signin = () => {
   const initialState = { email: '', password: '' };
   const [userData, setUserData] = useState(initialState);
   const { email, password } = userData;
@@ -37,7 +37,7 @@ const signin = () => {
 
 
     // fetchData에게 전달후 응답 받아오기
-    const res = await postData('auth/signin', userData);// 유저 로그인 실패, 성공 응답(res)
+    const res = await postData('auth/S', userData);// 유저 로그인 실패, 성공 응답(res)
     //error
     if (res.err) return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
     //success
@@ -63,6 +63,7 @@ const signin = () => {
   };
 
 
+  //인증이 완료되면(인증에 정보가 들어오면) 홈으로 리다이렉트
   useEffect(() => {
     if (Object.keys(auth).length !== 0) router.push("/");
   },[auth]);
@@ -103,4 +104,4 @@ const signin = () => {
   );
 };
 
-export default signin;
+export default Signin;

@@ -16,7 +16,10 @@ a {
   box-sizing: border-box;
 }
 
-img {}
+img {
+  object-fit: cover;
+  object-position: 0 70%;
+}
 
 
 /* ------------- Loading  ------------- */
