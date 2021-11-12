@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Head from 'next/head';
 import { getData } from '../../utils/fetchData';
+import { DataContext } from '../../store/globalState';
+import { addToCart } from '../../store/actions';
 
 const DetailProduct = (props) => {
   const [product, setProduct] = useState(props.product);
   const [tab, setTab] = useState(0); //첫이미지: image[0]
+
+  const { state, dispatch } = useContext(DataContext);
+  const { cart } = state;
+
+
 
   const isActive = (index) => {
     //tab: 변하는 값, index: 고정 값
@@ -60,7 +67,7 @@ const DetailProduct = (props) => {
         <p className="my-4">{product.description}</p>
 
         {/* button */}
-        <button type="button" className="btn btn-primary d-block my-3 px-5">Buy</button>
+        <button type="button" className="btn btn-primary d-block my-3 px-5" onClick={() => dispatch(addToCart(product, cart))}>Buy</button>
       </div>
 
     </div>
@@ -71,7 +78,6 @@ const DetailProduct = (props) => {
 //Server Side rendering
 export async function getServerSideProps({ params: { id } }) {
   // console.log(context.params); //{ id: '618b6f0411620e27043a7307' }
-
   const res = await getData(`product/${id}`);
 
   return {

@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
+import { DataContext } from '../../store/globalState';
+import { addToCart } from '../../store/actions';
 
 const ProductItem = ({ product }) => {
+  const { state, dispatch } = useContext(DataContext);
+  const { cart } = state; //[ product:{제품정보}, ... ]
+
+
   const userLink = () => {
     return (
       <>
+        {/* View */}
         <Link href={`/product/${product._id}`}>
           <a className="btn btn-info" style={{marginRight: '5px', flex: 1}}>View</a>
         </Link>
-        <button type="button" className="btn btn-success" style={{ marginLeft: '5px', flex: 1 }}>Buy</button>
+        {/* Buy */}
+        <button className="btn btn-success" 
+        style={{ marginLeft: '5px', flex: 1 }} 
+        disabled={product.inStock === 0 ? true : false}
+        onClick={() => dispatch(addToCart(product, cart))}
+        >Buy</button>
       </>
     );
   };
@@ -40,7 +52,7 @@ const ProductItem = ({ product }) => {
         {/* description */}
         <p className="card-text">{product.description.substr(0, 80) + '...'}</p>
 
-        {/* button (+ 양쪽으로 배치) */}
+        {/* button - View, Buy (+ 양쪽으로 배치) */}
         <div className="row justify-content-between mx-0">
           {userLink()}
         </div>
