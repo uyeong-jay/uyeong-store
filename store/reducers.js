@@ -1,7 +1,7 @@
 import { TYPES } from "./types";
 
 
-//state: { notify: {}, auth: {}, cart: [] }
+//state: { notify: {}, auth: {}, cart: [], modal: {} }
 const reducers = (state, action) => {
   switch (action.type) {
     case TYPES.NOTIFY:
@@ -18,6 +18,11 @@ const reducers = (state, action) => {
       return {
         ...state,
         cart: action.payload
+      };
+    case TYPES.ADD_MODAL:
+      return {
+        ...state,
+        modal: action.payload
       };
     default:
       return state;

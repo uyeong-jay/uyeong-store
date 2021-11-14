@@ -9,7 +9,7 @@ export const DataContext = createContext();
 
 //provider 생성
 export const DataProvider = ({ children }) => {
-  const initialState = { notify: {}, auth: {}, cart: [] };
+  const initialState = { notify: {}, auth: {}, cart: [], modal: {} };
 
   //useReducer
   const [state, dispatch] = useReducer(reducers, initialState);
@@ -43,6 +43,9 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('user_cart', JSON.stringify(cart));
   },[cart]);
+
+
+
 
 
   return (

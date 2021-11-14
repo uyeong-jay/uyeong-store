@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar'; //Layout에 navbar 포함 시키기
 import Notify from './Notify'; //알림 연결
+import Modal from './Modal'; //모달 연결
 
 const Layout = ({ children }) => {
   return (
@@ -8,6 +9,7 @@ const Layout = ({ children }) => {
     <div className="container">
       <NavBar />
       <Notify />
+      <Modal />
       {children}
     </div>
   );
