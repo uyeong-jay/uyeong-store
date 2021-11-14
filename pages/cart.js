@@ -1,14 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { DataContext } from '../store/globalState';
 import CartItem from '../components/cart/CartItem';
+import { getData } from '../utils/fetchData';
+import { TYPES } from '../store/types';
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const { auth, cart } = state;
 
 
+  const totalPrice = useMemo(() => {
+    return cart.reduce((prev, item) => prev + (item.price * item.quantity),0);
+  },[cart]);
+
+
+  //카트 데이터 최신화 유지(데이터를 직접 바꿔도 최신화 유지가능)
+  useEffect(() => {
+    const localCart = JSON.parse(localStorage.getItem('user_cart'));//배열
+    if (localCart && localCart.length > 0) {
+      let newArr = [];
+      const newCartData = async () => {
+
+        for (const item of localCart) { //cart product 하나하나 최신화
+          const res = await getData(`product/${item._id}`); //{ product: ~ }
+          const { _id, title, images, price, inStock } = res.product;
+          if (inStock > 0) { //inStock이 0 이면 빈배열 그대로 반환
+            newArr.push({ _id, title, images, price, inStock, quantity: (item.quantity > inStock ? 1 : item.quantity) });
+          };
+        }
+
+        dispatch({ type: TYPES.ADD_CART, payload: newArr });
+      };
+      newCartData();
+    };
+  },[]);
 
   
   return (
@@ -42,10 +69,10 @@ const Cart = () => {
                 <input type="text" name="mobile" id="mobile" className="form-control mb-2" />
               </form>
 
-              <h3>Total: <span className="text-info">$0</span></h3>
+              <h3>Total:&nbsp;&nbsp;<span className="text-info">${totalPrice}&nbsp;</span></h3>
 
               <Link href={auth.user ? '#' : '/signin'}>
-                <a className="btn btn-dark my-2 text-capitalize">Proceed with payment</a>
+                <a className="btn btn-success my-2 text-capitalize">Proceed with payment</a>
               </Link>
             </div>
           </>
