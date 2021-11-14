@@ -1,7 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
+import { count } from '../../store/actions';
+import { TYPES } from '../../store/types';
 
 const CartItem = ({ item, cart, dispatch }) => {
+
+
+
+
   return (
     <tr>
       {/* cart-item-image */}
@@ -11,7 +17,7 @@ const CartItem = ({ item, cart, dispatch }) => {
       </td>
 
       {/* cart-item-info */}
-      <td style={{ minWidth: '200px' }}>
+      <td style={{ minWidth: '300px' }}>
         <h5 className="text-capitalize text-secondary">
           <Link href={`/product/${item._id}`}><a>{item.title}</a></Link>
         </h5>
@@ -24,16 +30,28 @@ const CartItem = ({ item, cart, dispatch }) => {
       </td>
 
       {/* cart-count-quantity */}
-      <td className="align-middle" style={{ minWidth: '150px' }}>
-        <button type="button" className="btn btn-outline-secondary" style={{ width:'30px', height: '30px', padding: 0 }}>-</button>
+      <td className="align-middle" style={{ minWidth: '110px' }}>
+        <button type="button" 
+          className="btn btn-outline-secondary" style={{ width:'30px', height: '30px', padding: 0 }}
+          onClick={() => dispatch(count(cart, item._id, "-"))}
+          disabled={item.quantity <= 1 ? true : false}
+        >-</button>
+
         <span className="mx-2">{item.quantity}</span>
-        <button type="button" className="btn btn-outline-secondary" style={{ width:'30px', height: '30px', padding: 0 }}>+</button>
+        
+        <button type="button" 
+          className="btn btn-outline-secondary" style={{ width:'30px', height: '30px', padding: 0 }}
+          onClick={() => dispatch(count(cart, item._id, "+"))}
+          disabled={item.quantity >= item.inStock ? true : false}
+        >+</button>
       </td>
       
       {/* cart-delete-icon */}
-      <td className="align-middle" style={{ minWidth: '50px', cursor: 'pointer' }}>
-        {/* font awesome - delete (+ aria-hidden ) */}
-        <i className="far fa-trash-alt text-danger" aria-hidden='true'></i>
+      <td className="align-middle" style={{ width: '20px', cursor: 'pointer' }}>
+        {/* font awesome - delete (+ aria-hidden ) (+ bootstrap 4 modal)*/}
+        <i className="far fa-trash-alt text-danger" aria-hidden='true' data-toggle="modal" data-target="#exampleModal" style={{ fontSize: '18px' }}
+        onClick={() => dispatch({ type: TYPES.ADD_MODAL, payload: { data: cart, id: item._id, title: item.title } })}
+        ></i>
       </td>
 
     </tr>
