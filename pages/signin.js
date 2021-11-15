@@ -37,7 +37,7 @@ const Signin = () => {
 
 
     // fetchData에게 전달후 응답 받아오기
-    const res = await postData('auth/S', userData);// 유저 로그인 실패, 성공 응답(res)
+    const res = await postData('auth/signin', userData);// 유저 로그인 실패, 성공 응답(res)
     //error
     if (res.err) return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
     //success
@@ -59,7 +59,7 @@ const Signin = () => {
 
 
     //위 과정이 다끝나면 localStorage에 표기
-    return localStorage.setItem('firstLogin',  true);
+    localStorage.setItem('firstLogin',  true);
   };
 
 
