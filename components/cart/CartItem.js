@@ -50,7 +50,10 @@ const CartItem = ({ item, cart, dispatch }) => {
       <td className="align-middle" style={{ width: '20px', cursor: 'pointer' }}>
         {/* font awesome - delete (+ aria-hidden ) (+ bootstrap 4 modal)*/}
         <i className="far fa-trash-alt text-danger" aria-hidden='true' data-toggle="modal" data-target="#exampleModal" style={{ fontSize: '18px' }}
-        onClick={() => dispatch({ type: TYPES.ADD_MODAL, payload: { data: cart, id: item._id, title: item.title } })}
+        onClick={() => dispatch({ 
+          type: TYPES.ADD_MODAL, 
+          payload: { data: cart, id: item._id, title: item.title } 
+        })} //icon클릭시: cart전체, 제품id, 제품title 전달
         ></i>
       </td>
 

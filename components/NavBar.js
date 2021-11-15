@@ -12,7 +12,7 @@ const NavBar = () => {
 
   const { state, dispatch } = useContext(DataContext);
   const { auth, cart } = state;
-  console.log(auth.user);
+  // console.log(auth.user);
 
 
   //로그아웃: 유저의 쿠키, 스토리지, 인증정보 초기화 후 성공 메세지

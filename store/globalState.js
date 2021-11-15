@@ -60,3 +60,4 @@ export const DataProvider = ({ children }) => {
 // notify: { loading: "", success: "", error: "" }
 // auth: { user: {유저정보}, token: "" }
 // cart: [ product: {제품정보}, ... ]
+// modal: { data: [], id: "", title: "" }

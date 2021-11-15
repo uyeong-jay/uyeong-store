@@ -29,6 +29,6 @@ export const count = (cart, productId, sign) => {
 
 //delete item
 export const deleteItem = (data, productId, type) => {
-  const newData = data.filter((item) => item._id !== productId);
+  const newData = data.filter((item) => item._id !== productId); //인자로 들어온 item 외 나머지를 반환
   return ({ type, payload: newData });
 };
