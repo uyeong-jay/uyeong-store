@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { DataContext } from '../store/globalState';
 import CartItem from '../components/cart/CartItem';
-import { getData } from '../utils/fetchData';
+import PaypalBtn from '../components/PaypalBtn';
+import { DataContext } from '../store/globalState';
 import { TYPES } from '../store/types';
+import { getData } from '../utils/fetchData';
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const { auth, cart } = state;
+
+  const [address, setAddress] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [payment, setPayment] = useState(false);
+
 
 
   const totalPrice = useMemo(() => {
@@ -37,6 +43,14 @@ const Cart = () => {
     };
   },[]);
 
+
+  //결제 버튼 클릭
+  const onClickPayment = () => {
+    //주소, 번호 기입확인
+    if (!address || !mobile) return dispatch({ type: TYPES.NOTIFY, payload: { error: 'Please add your address and mobile' } });
+    setPayment(true);
+  };
+
   
   return (
     <div className="row mx-auto">
@@ -63,17 +77,35 @@ const Cart = () => {
             <div className="col-md-4 text-right text-uppercase text-secondary">
               <form>
                 <h2>Shopping</h2>
+
                 <label htmlFor="address">Address</label>
-                <input type="text" name="address" id="address" className="form-control mb-2" />
+                <input type="text" name="address" id="address" className="form-control mb-2" 
+                value={address} onChange={(e) => setAddress(e.currentTarget.value)} />
+
                 <label htmlFor="mobile">Mobile</label>
-                <input type="text" name="mobile" id="mobile" className="form-control mb-2" />
+                <input type="text" name="mobile" id="mobile" className="form-control mb-2" 
+                value={mobile} onChange={(e) => setMobile(e.currentTarget.value)} />
               </form>
 
+              {/* total price */}
               <h3>Total:&nbsp;&nbsp;<span className="text-info">${totalPrice}&nbsp;</span></h3>
 
-              <Link href={auth.user ? '#' : '/signin'}>
-                <a className="btn btn-success my-2 text-capitalize">Proceed with payment</a>
-              </Link>
+              {/* paypal 결제 버튼 */}
+              {
+                payment
+                ? (<PaypalBtn 
+                    totalPrice={totalPrice} 
+                    address={address} 
+                    mobile={mobile} 
+                    state={state}
+                    dispatch={dispatch}
+                  />)
+                : (<Link href={auth.user ? '#!' : '/signin'}>
+                    <a className="btn btn-success my-2 text-capitalize" onClick={onClickPayment}>Proceed with payment</a>
+                  </Link>)
+              }
+
+              
             </div>
           </>
         )

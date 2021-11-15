@@ -17,6 +17,9 @@ class MyDocument extends Document{
 
           {/* Font Awesome 5 Intro */}
           <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+          {/* Paypal checkout - https://developer.paypal.com/docs/checkout/integrate/ */}
+          <script src={`https://www.paypal.com/sdk/js?client-id=${process.env.PAYPAL_CLIENT_ID}`}></script>
         </Head>
         <body>
           <Main />
