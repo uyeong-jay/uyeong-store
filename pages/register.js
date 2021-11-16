@@ -44,6 +44,7 @@ const Register = () => {
     return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
   };
 
+  //redirect - 홈
   useEffect(() => {
     if (Object.keys(auth).length !== 0) router.push("/");
   }, [auth]);
