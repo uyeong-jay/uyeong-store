@@ -13,6 +13,7 @@ export default async (req, res) => {
   }
 };
 
+//주문 정보 만들어 주는 함수
 const createOrder = async (req, res) => {
   try {
     const result = await auth(req, res);
@@ -27,6 +28,10 @@ const createOrder = async (req, res) => {
       totalPrice,
     });
 
+    cart.filter((item) =>
+      sold(item._id, item.quantity, item.inStock, item.sold)
+    );
+
     await newOrder.save();
 
     res.json({
@@ -36,4 +41,15 @@ const createOrder = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ err: err.message });
   }
+};
+
+//재고, 팔린갯수 업데이트 함수
+const sold = async (id, quantity, oldInStock, oldSold) => {
+  await Products.findOneAndUpdate(
+    { _id: id },
+    {
+      inStock: oldInStock - quantity,
+      sold: oldSold + quantity,
+    }
+  );
 };

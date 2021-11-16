@@ -25,10 +25,10 @@ const Cart = () => {
     if (localCart && localCart.length > 0) {
       let newArr = [];
       const newCartData = async () => {
+        //cart product 하나하나 최신화
         for (const item of localCart) {
-          //cart product 하나하나 최신화
           const res = await getData(`product/${item._id}`); //{ product: ~ }
-          const { _id, title, images, price, inStock } = res.product;
+          const { _id, title, images, price, inStock, sold } = res.product;
           if (inStock > 0) {
             //inStock이 0 이면 빈배열 그대로 반환
             newArr.push({
@@ -37,6 +37,7 @@ const Cart = () => {
               images,
               price,
               inStock,
+              sold,
               quantity: item.quantity > inStock ? 1 : item.quantity,
             });
           }
@@ -51,11 +52,12 @@ const Cart = () => {
   //결제 버튼 클릭
   const onClickPayment = () => {
     //주소, 번호 기입확인
-    if (!address || !mobile)
+    if (!address || !mobile) {
       return dispatch({
         type: TYPES.NOTIFY,
         payload: { error: "Please add your address and mobile" },
       });
+    }
     setPayment(true);
   };
 
