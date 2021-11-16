@@ -125,9 +125,9 @@ const NavBar = () => {
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   {/* Profile */}
-                  <a className="dropdown-item" href="#">
-                    Profile
-                  </a>
+                  <Link href="/profile">
+                    <a className="dropdown-item">Profile</a>
+                  </Link>
                   {/* Logout */}
                   <button
                     className="dropdown-item"
