@@ -52,8 +52,6 @@ const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
                 payload: { success: res.msg },
               }); //성공 메세지
             });
-
-            alert("Transaction completed by " + details.payer.name.given_name);
           });
         },
       })
