@@ -2,9 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
+
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
-import { urlObjectKeys } from "next/dist/shared/lib/utils";
+
+import { imageUpload } from "../utils/imageUpload";
 
 const profile = () => {
   const initialState = {
@@ -36,7 +38,7 @@ const profile = () => {
   const updatePassword = () => {
     dispatch({ type: TYPES.NOTIFY, payload: { loading: true } }); //로딩
 
-    //새password 보내기
+    //새password 보내고 응답 받기
     patchData("user/resetPassword", { password }, auth.token).then((res) => {
       if (res.err)
         return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } }); //실패
@@ -44,12 +46,46 @@ const profile = () => {
     });
   };
 
+  const updateInfo = async () => {
+    dispatch({ type: TYPES.NOTIFY, payload: { loading: true } });
+
+    let media;
+    if (avatar) media = await imageUpload([avatar]);
+    //avatar: {name: "", ...} >> 이미지 정보(객체)
+    //[avatar]: [ 0: {name: "", ...} ] >>  유사배열(객체)안 이미지 정보(객체)
+    // console.log(typeof [avatar]); //object
+    //데이터를 받아오면: console.log(media); // [ {public_id: "" url: ""}, ... ]
+
+    patchData(
+      "user",
+      { name, avatar: avatar ? media[0].url : auth.user.avatar },
+      auth.token
+    ).then((res) => {
+      if (res.err)
+        return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
+
+      // 유저 인증정보 상태 데이터 업데이트 하기
+      dispatch({
+        type: TYPES.AUTH,
+        payload: { token: auth.token, user: res.user },
+      });
+
+      return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
+    });
+  };
+
   //프로필 업데이트
   const onClickUpdate = (e) => {
-    const errMsg = valid(name, auth.user.email, password, cf_password);
-    if (errMsg)
-      return dispatch({ type: TYPES.NOTIFY, payload: { error: errMsg } });
-    updatePassword();
+    //input에 password가 입력되어 있을때
+    if (password) {
+      const errMsg = valid(name, auth.user.email, password, cf_password); //유효성 검사
+      if (errMsg)
+        return dispatch({ type: TYPES.NOTIFY, payload: { error: errMsg } });
+      updatePassword();
+    }
+
+    //avatar에 file이 있거나, 이름을 바꿨을때
+    if (avatar || name !== auth.user.name) updateInfo();
   };
 
   //프로필사진 업로드
@@ -82,8 +118,6 @@ const profile = () => {
     //파일 데이터 avatar에 저장
     setData({ ...data, avatar: file });
   };
-
-  const 
 
   if (!auth.user) return null; //최초 렌더링시는 auth.user를 받아오기 전
   return (
