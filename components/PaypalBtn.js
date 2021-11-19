@@ -4,7 +4,7 @@ import { TYPES } from "../store/types";
 
 const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
   const refPayPalBtn = useRef();
-  const { cart, auth } = state;
+  const { cart, auth, orders } = state;
 
   useEffect(() => {
     paypal
@@ -46,7 +46,13 @@ const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
                   payload: { error: res.err },
                 }); //에러 메세지
 
-              dispatch({ type: TYPES.ADD_CART, payload: [] }); //카트 초기화
+              dispatch({ type: TYPES.ADD_CART, payload: [] }); //카트 비우기
+
+              dispatch({
+                type: TYPES.ADD_ORDERS,
+                payload: [...orders, res.newOrder],
+              }); //새주문 >> 주문목록에 추가
+
               return dispatch({
                 type: TYPES.NOTIFY,
                 payload: { success: res.msg },
