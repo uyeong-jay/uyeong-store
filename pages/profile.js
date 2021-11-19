@@ -2,11 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
-
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
-
 import { imageUpload } from "../utils/imageUpload";
+import Orders from "../components/profile/Orders";
 
 const profile = () => {
   const initialState = {
@@ -46,6 +45,7 @@ const profile = () => {
     });
   };
 
+  //유저 정보 업데이트 함수
   const updateInfo = async () => {
     dispatch({ type: TYPES.NOTIFY, payload: { loading: true } });
 
@@ -64,7 +64,7 @@ const profile = () => {
       if (res.err)
         return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
 
-      // 유저 인증정보 상태 데이터 업데이트 하기
+      // 유저 인증정보 상태 데이터 업데이트 하기 (+ 토큰 다시 넣어주기)
       dispatch({
         type: TYPES.AUTH,
         payload: { token: auth.token, user: res.user },
@@ -74,7 +74,7 @@ const profile = () => {
     });
   };
 
-  //프로필 업데이트
+  //프로필 업데이트( with updatePassword, updateInfo)
   const onClickUpdate = (e) => {
     //input에 password가 입력되어 있을때
     if (password) {
@@ -222,7 +222,7 @@ const profile = () => {
 
         {/* Order */}
         <div className="col-md-8">
-          <h3 className="text-center text-uppercase">Orders</h3>
+          <Orders />
         </div>
       </section>
     </div>
