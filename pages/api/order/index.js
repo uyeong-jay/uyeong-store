@@ -10,6 +10,9 @@ export default async (req, res) => {
     case "POST":
       await createOrder(req, res);
       break;
+    case "GET":
+      await getOrder(req, res);
+      break;
   }
 };
 
@@ -52,4 +55,26 @@ const sold = async (id, quantity, oldInStock, oldSold) => {
       sold: oldSold + quantity,
     }
   );
+};
+
+//주문 했던 목록 내보내 주는 함수
+const getOrder = async (req, res) => {
+  try {
+    const result = await auth(req, res);
+
+    let orders;
+    //사용자 권한 선 체크
+    if (result.role !== "admin") {
+      orders = await Orders.find({ user: result.id }).populate(
+        "user",
+        "-password"
+      );
+    } else {
+      orders = await Orders.find().populate("user", "-password");
+    }
+
+    res.json({ orders }); //주문했던 목록
+  } catch (err) {
+    return res.status(500).json({ err: err.message });
+  }
 };
