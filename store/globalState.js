@@ -10,11 +10,11 @@ export const DataContext = createContext();
 //provider 생성
 export const DataProvider = ({ children }) => {
   const initialState = {
-    notify: {},
-    auth: {},
-    cart: [],
-    modal: {},
-    orders: [],
+    notify: {}, // { loading: "", success: "", error: "" }
+    auth: {}, // { user: {유저정보}, token: "" }
+    cart: [], // [ product: {제품정보}, ... ]
+    modal: {}, // { data: [cart정보 전체], id: "", title: "" }
+    orders: [], // [ {주문정보}, ... ]
   };
 
   //useReducer
@@ -72,9 +72,3 @@ export const DataProvider = ({ children }) => {
     </DataContext.Provider>
   );
 };
-
-//상태 데이터 구조
-// notify: { loading: "", success: "", error: "" }
-// auth: { user: {유저정보}, token: "" }
-// cart: [ product: {제품정보}, ... ]
-// modal: { data: [], id: "", title: "" }

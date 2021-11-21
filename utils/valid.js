@@ -6,7 +6,7 @@ function validateEmail(email) {
   return re.test(email);
 }
 
-//register 페이지 유효성 검사 유틸
+//유저 유효성 검사 유틸
 const valid = (name, email, password, cf_password) => {
   if (!name || !email || !password) {
     return "Please add all fileds.";

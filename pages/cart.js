@@ -93,8 +93,8 @@ const Cart = () => {
             </table>
           </div>
 
-          {/* cart-shopping-form */}
           <div className="col-md-4 text-right text-uppercase text-secondary">
+            {/* cart-shopping-form */}
             <form>
               <h2>Shopping</h2>
 
