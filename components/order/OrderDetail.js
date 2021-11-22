@@ -1,6 +1,5 @@
 import React from "react";
 import OrderItem from "./OrderItem";
-import { useRouter } from "next/router";
 
 const OrderDetail = ({ order, state, dispatch }) => {
   // order 데이터
@@ -18,8 +17,7 @@ const OrderDetail = ({ order, state, dispatch }) => {
 
   const { auth, orders } = state;
 
-  const { _id, address, mobile, user, cart, delivered, updatedAt, paid } =
-    order;
+  const { _id, address, mobile, user, cart, delivered, updatedAt } = order;
 
   if (!auth.user) return null; //최초 렌더링시는 auth.user를 받아오기 전
   return (
