@@ -9,7 +9,7 @@ const Orders = () => {
   return (
     <>
       <h3 className="text-center text-uppercase">Orders</h3>
-      <div className="my-3">
+      <div className="my-3 table-responsive">
         <table
           className="table-bordered table-hover w-100"
           style={{ minWidth: "600px" }}
@@ -20,7 +20,6 @@ const Orders = () => {
               <td className="p-2">Date</td>
               <td className="p-2">Total</td>
               <td className="p-2">Delivered</td>
-              <td className="p-2">Action</td>
             </tr>
           </thead>
 
