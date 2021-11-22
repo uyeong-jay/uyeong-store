@@ -1,10 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { postData } from "../utils/fetchData";
 import { TYPES } from "../store/types";
+import { useRouter } from "next/router";
 
 const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
   const refPayPalBtn = useRef();
   const { cart, auth, orders } = state;
+
+  const orderId = useMemo(() => {
+    let idArr = [];
+    orders.forEach((order) => {
+      idArr.push(order._id);
+    });
+    return idArr[idArr.length - 1];
+  }, [orders]);
+
+  const router = useRouter();
 
   useEffect(() => {
     paypal
@@ -52,6 +63,8 @@ const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
                 type: TYPES.ADD_ORDERS,
                 payload: [...orders, res.newOrder],
               }); //새주문 >> 주문목록에 추가
+
+              router.push(`/order/${orderId}`);
 
               return dispatch({
                 type: TYPES.NOTIFY,
