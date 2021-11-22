@@ -14,7 +14,7 @@ const Order = ({ order }) => {
   //  createdAt: ""
   //  updatedAt: ""
   //  __v: 0 }
-  const { _id, createdAt, totalPrice, delivered, paid } = order;
+  const { _id, createdAt, totalPrice, delivered } = order;
   return (
     <tr>
       {/* id (+ Link - detail order) */}
@@ -33,15 +33,6 @@ const Order = ({ order }) => {
       {/* delivered (+ fontawesome icons - check, times)*/}
       <td className="p-2">
         {delivered ? (
-          <i className="fas fa-check text-success"></i>
-        ) : (
-          <i className="fas fa-times text-danger"></i>
-        )}
-      </td>
-
-      {/* paid (+ fontawesome icons - check, times)*/}
-      <td className="p-2">
-        {paid ? (
           <i className="fas fa-check text-success"></i>
         ) : (
           <i className="fas fa-times text-danger"></i>
