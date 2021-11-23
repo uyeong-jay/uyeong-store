@@ -18,8 +18,9 @@ const Orders = () => {
             <tr>
               <td className="p-2">Id</td>
               <td className="p-2">Date</td>
-              <td className="p-2">Total</td>
+              <td className="p-2">Total Price</td>
               <td className="p-2">Delivered</td>
+              <td className="p-2">Paid</td>
             </tr>
           </thead>
 
