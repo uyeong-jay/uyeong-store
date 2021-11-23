@@ -1,25 +1,29 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import CartItem from "../components/cart/CartItem";
-import PaypalBtn from "../components/PaypalBtn";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
-import { getData } from "../utils/fetchData";
+import { getData, postData } from "../utils/fetchData";
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
-  const { auth, cart } = state;
+  const { auth, cart, orders } = state;
 
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
-  const [payment, setPayment] = useState(false);
+  const [callback, setCallback] = useState(false);
 
+  const router = useRouter();
+
+  //카트에 넣은 제품들 총 가격 반환 함수
   const totalPrice = useMemo(() => {
     return cart.reduce((prev, item) => prev + item.price * item.quantity, 0);
   }, [cart]);
 
-  //카트 데이터 최신화 유지(데이터를 직접 바꿔도 최신화 유지가능)
+  //카트 데이터 최신화 유지(데이터를 직접 바꿔도 최신화 유지가능)(+ callback에 변화가 있을때 마다)
   useEffect(() => {
     const localCart = JSON.parse(localStorage.getItem("user_cart")); //배열
     if (localCart && localCart.length > 0) {
@@ -47,10 +51,10 @@ const Cart = () => {
       };
       newCartData();
     }
-  }, []);
+  }, [callback]);
 
   //결제 버튼 클릭
-  const onClickPayment = () => {
+  const onClickPayment = async () => {
     //주소, 번호 기입확인
     if (!address || !mobile) {
       return dispatch({
@@ -58,7 +62,61 @@ const Cart = () => {
         payload: { error: "Please add your address and mobile" },
       });
     }
-    setPayment(true);
+
+    let newCart = [];
+    for (let item of cart) {
+      const res = await getData(`product/${item._id}`);
+
+      //재고가 더 많을때 새카트에 상품 넣기
+      if (res.product.inStock - item.quantity >= 0) {
+        newCart.push(item);
+      }
+    }
+
+    //newCart[]에 상품이 넣어지지 않았을 시
+    if (newCart.length < cart.length) {
+      setCallback(!callback); //데이터 최신화
+      return dispatch({
+        type: "NOTIFY",
+        payload: {
+          error: "The product is out of stock or the quantity is insufficient.",
+        },
+      });
+    }
+
+    dispatch({ type: "NOTIFY", payload: { loading: true } }); //로딩
+
+    postData("order", { address, mobile, cart, totalPrice }, auth.token).then(
+      (res) => {
+        //console.log(res); >> { msg: "", newOrder: {user, address, mobile, cart, totalPrice} }
+
+        if (res.err)
+          return dispatch({
+            type: TYPES.NOTIFY,
+            payload: { error: res.err },
+          }); //에러 메세지
+
+        dispatch({ type: TYPES.ADD_CART, payload: [] }); //카트 비우기
+
+        const newOrder = {
+          ...res.newOrder,
+          user: auth.user,
+        }; //user에 id대신 유저 정보(auth.user) 넣기
+
+        dispatch({
+          type: TYPES.ADD_ORDERS,
+          payload: [...orders, newOrder],
+        }); //주문목록에 newOrder추가
+
+        dispatch({
+          type: TYPES.NOTIFY,
+          payload: { success: res.msg },
+        }); //주문 성공 메세지
+
+        //새로 주문한 상품 페이지로 리다이렉트
+        return router.push(`/order/${res.newOrder._id}`);
+      }
+    );
   };
 
   return (
@@ -125,25 +183,14 @@ const Cart = () => {
               <span className="text-info">${totalPrice}&nbsp;</span>
             </h3>
 
-            {/* paypal 결제 버튼 */}
-            {payment ? (
-              <PaypalBtn
-                totalPrice={totalPrice}
-                address={address}
-                mobile={mobile}
-                state={state}
-                dispatch={dispatch}
-              />
-            ) : (
-              <Link href={auth.user ? "#!" : "/signin"}>
-                <a
-                  className="btn btn-success my-2 text-capitalize"
-                  onClick={onClickPayment}
-                >
-                  Proceed with payment
-                </a>
-              </Link>
-            )}
+            <Link href={auth.user ? "#!" : "/signin"}>
+              <a
+                className="btn btn-success my-2 text-capitalize"
+                onClick={onClickPayment}
+              >
+                Proceed with payment
+              </a>
+            </Link>
           </div>
         </>
       )}
