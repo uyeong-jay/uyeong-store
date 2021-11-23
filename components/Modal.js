@@ -40,9 +40,7 @@ const Modal = () => {
           </div>
 
           {/* modal-body */}
-          <div className="modal-body">
-            Do you really want to delete this item?
-          </div>
+          <div className="modal-body">Do you want to delete this item?</div>
 
           {/* modal-footer (+ data-dismiss="modal")*/}
           <div className="modal-footer">
