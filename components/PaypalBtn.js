@@ -1,21 +1,13 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import { postData } from "../utils/fetchData";
+import React, { useEffect, useRef, useContext } from "react";
+import { patchData } from "../utils/fetchData";
+import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
-import { useRouter } from "next/router";
+import { updateItem } from "../store/actions";
 
-const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
+const PaypalBtn = ({ order }) => {
   const refPayPalBtn = useRef();
-  const { cart, auth, orders } = state;
-
-  const orderId = useMemo(() => {
-    let idArr = [];
-    orders.forEach((order) => {
-      idArr.push(order._id);
-    });
-    return idArr[idArr.length - 1];
-  }, [orders]);
-
-  const router = useRouter();
+  const { state, dispatch } = useContext(DataContext);
+  const { auth, orders } = state;
 
   useEffect(() => {
     paypal
@@ -26,7 +18,7 @@ const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
             purchase_units: [
               {
                 amount: {
-                  value: totalPrice,
+                  value: order.totalPrice,
                 },
               },
             ],
@@ -43,28 +35,45 @@ const PaypalBtn = ({ totalPrice, address, mobile, state, dispatch }) => {
           return actions.order.capture().then(function (details) {
             // This function shows a transaction success message to your buyer.
 
+            // console.log(details);
+            // {
+            //    create_time: "2021-11-23T06:22:56Z"
+            //    id: ""
+            //    intent: "CAPTURE"
+            //    links: [{…}]
+            //    payer: {name: {…}, email_address: '', payer_id: '', address: {…}}
+            //    purchase_units: [{…}]
+            //    status: "COMPLETED"
+            //    update_time: "2021-11-23T06:23:07Z"
+            // }
+            const { create_time, payer } = details;
+
             //결제 후 응답 받기
-            postData(
-              "order",
-              { address, mobile, cart, totalPrice },
+            patchData(
+              `order/payment/${order._id}`,
+              { paymentId: payer.payer_id },
               auth.token
             ).then((res) => {
-              //console.log(res); >> { msg: "", newOrder: {user, address, mobile, cart, totalPrice} }
-
               if (res.err)
                 return dispatch({
                   type: TYPES.NOTIFY,
                   payload: { error: res.err },
                 }); //에러 메세지
 
-              dispatch({ type: TYPES.ADD_CART, payload: [] }); //카트 비우기
-
-              dispatch({
-                type: TYPES.ADD_ORDERS,
-                payload: [...orders, res.newOrder],
-              }); //새주문 >> 주문목록에 추가
-
-              router.push(`/order/${orderId}`);
+              dispatch(
+                updateItem(
+                  orders,
+                  order._id,
+                  {
+                    ...order,
+                    paid: true,
+                    dateOfpayment: create_time,
+                    paymentId: payer.payer_id,
+                    method: "Paypal",
+                  },
+                  TYPES.ADD_ORDERS
+                )
+              ); //paid, dateOfpayment 변경 / paymentId, method 추가
 
               return dispatch({
                 type: TYPES.NOTIFY,
