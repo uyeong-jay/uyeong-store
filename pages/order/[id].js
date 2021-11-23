@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../store/globalState";
-import Head from "next/Head";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import OrderDetail from "../../components/order/OrderDetail";
 
