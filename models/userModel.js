@@ -1,35 +1,39 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    root: {
+      type: Boolean,
+      default: false,
+    },
+    avatar: {
+      type: String,
+      //cloudinary
+      default:
+        "https://res.cloudinary.com/uyeong/image/upload/v1637676343/nextjs_media/igin1evr3clomdfy2ikm.png",
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
-    default: 'user'
-  },
-  root: {
-    type: Boolean,
-    default: false
-  },
-  avatar: {
-    type: String,
-    //클라우디너리
-    default: 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png'
+  {
+    timestamps: true,
   }
-}, {
-  timestamps: true
-});
+);
 
-let Dataset = mongoose.models.user || mongoose.model('user', userSchema);
+let Dataset = mongoose.models.user || mongoose.model("user", userSchema);
 export default Dataset;
