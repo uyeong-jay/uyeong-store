@@ -2,7 +2,7 @@ import connectDB from "../../../../utils/connectDB";
 import Orders from "../../../../models/orderModel";
 import auth from "../../../../middleware/auth";
 
-connectDB(); //utils, models, mid
+connectDB();
 
 export default async (req, res) => {
   switch (req.method) {

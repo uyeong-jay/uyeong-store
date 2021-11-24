@@ -119,7 +119,7 @@ const profile = () => {
     setData({ ...data, avatar: file });
   };
 
-  if (!auth.user) return null; //최초 렌더링시는 auth.user를 받아오기 전
+  if (!auth.user) return null; // !로그인 시 null
   return (
     <div className="profile">
       <Head>

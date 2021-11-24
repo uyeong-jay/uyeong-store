@@ -6,14 +6,16 @@ import { TYPES } from "../../store/types";
 
 const ProductItem = ({ product }) => {
   const { state, dispatch } = useContext(DataContext);
-  const { cart } = state; //[ product:{제품정보}, ... ]
+  const { notify, cart } = state; //[ product:{제품정보}, ... ]
 
   const onClickCart = () => {
-    dispatch(addToCart(product, cart));
-    return dispatch({
+    //성공메세지
+    dispatch({
       type: TYPES.NOTIFY,
       payload: { success: "added to cart" },
     });
+    //카트에 더하기
+    return dispatch(addToCart(product, cart));
   };
 
   const userLink = () => {

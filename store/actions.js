@@ -44,7 +44,7 @@ export const deleteItem = (data, productId, type) => {
 
 //update item
 export const updateItem = (data, productId, post, type) => {
-  const newData = data.map((item) => (item._id === productId ? post : item)); //post: {paid: true, dateOfpayment: "", paymentId: "", method: "Paypal"} 반환
+  const newData = data.map((item) => (item._id === productId ? post : item)); //post: { ~ }
 
   return { type, payload: newData };
 };

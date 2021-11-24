@@ -38,7 +38,7 @@ const createOrder = async (req, res) => {
     await newOrder.save();
 
     res.json({
-      msg: "Please check the order list and make a payment.",
+      msg: "Order success! Please check the order list and make a payment.",
       newOrder,
     });
   } catch (err) {
