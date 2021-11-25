@@ -1,22 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import OrderItem from "./OrderItem";
 import PaypalBtn from "../PaypalBtn";
+import { patchData } from "../../utils/fetchData";
+import { updateItem } from "../../store/actions";
+import { TYPES } from "../../store/types";
 
 const OrderDetail = ({ order, state, dispatch }) => {
-  // order 데이터
-  // { _id: "619248f315ba1dc07bdded38"
-  //  address: ""
-  //  mobile: ""
-  //  cart: [{…}]
-  //  user: { ~ }
-  //  totalPrice: 8
-  //  paid: false
-  //  delivered: false
-  //  createdAt: ""
-  //  updatedAt: ""
-  //  __v: 0 }
-
-  const { auth } = state;
+  const { auth, orders } = state;
 
   const {
     _id,
@@ -33,7 +23,38 @@ const OrderDetail = ({ order, state, dispatch }) => {
     method,
   } = order;
 
-  if (!auth.user) return null; //최초 렌더링시는 auth.user를 받아오기 전
+  const onClickDelivered = (order) => {
+    dispatch({ type: TYPES.NOTIFY, payload: { loading: true } }); //로딩
+
+    //result 데이터 가져오기
+    patchData(`order/delivered/${order._id}`, null, auth.token).then((res) => {
+      // console.log(res); //msg, result
+
+      if (res.err)
+        return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } }); //에러
+
+      const { paid, dateOfPayment, method, delivered } = res.result;
+
+      //order에 result 내용들 추가
+      dispatch(
+        updateItem(
+          orders,
+          order._id,
+          {
+            ...order,
+            paid,
+            dateOfPayment,
+            method,
+            delivered,
+          },
+          TYPES.ADD_ORDERS
+        )
+      ); //update order
+
+      return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } }); //성공
+    });
+  };
+
   return (
     <div className="row justify-content-center" style={{ margin: "20px auto" }}>
       <div className="my-3" style={{ maxWidth: "600px" }}>
@@ -53,14 +74,22 @@ const OrderDetail = ({ order, state, dispatch }) => {
         <div
           className={`alert ${
             delivered ? "alert-success" : "alert-danger"
-          } justify-content-between align-items-center`}
+          } d-flex justify-content-between align-items-center`}
           role="alert"
           style={{ marginTop: "-30px", marginBottom: "50px" }}
         >
           {delivered ? `Deliverd on ${updatedAt}` : "Not Delivered"}
+          {auth.user.role === "admin" && !delivered && (
+            <button
+              className="btn btn-info"
+              onClick={() => onClickDelivered(order)}
+            >
+              Mark as delivered
+            </button>
+          )}
         </div>
 
-        {/* Payment - info */}
+        {/* payment - info */}
         <div className="text-secondary">
           <h3 className="my-3">Payment</h3>
           <p>Method: {method}</p>
@@ -73,13 +102,13 @@ const OrderDetail = ({ order, state, dispatch }) => {
           role="alert"
           style={{ marginBottom: "50px" }}
         >
-          {paid ? `Paid On ${dateOfPayment}` : "Not Paid"}
+          {paid ? `Paid on ${dateOfPayment}` : "Not Paid"}
         </div>
 
         {/* 경계선 */}
         <hr style={{ border: 0, height: "3px", background: "#ccc" }} />
 
-        {/* Order Items-info */}
+        {/* order items-info */}
         <div>
           <h3 className="text-uppercase">Order Items</h3>
           {cart.map((item) => (
@@ -87,6 +116,7 @@ const OrderDetail = ({ order, state, dispatch }) => {
           ))}
         </div>
 
+        {/* paid && user일때  */}
         {!paid && auth.user.role !== "admin" && (
           <div className="float-right my-4">
             <h3 className="float-right mb-4 text-uppercase text-info">
