@@ -1,29 +1,17 @@
 import React, { useContext } from "react";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { DataContext } from "../store/globalState";
-import { TYPES } from "../store/types";
+import DropdownMenu from "./menu/DropdownMenu";
 
 const NavBar = () => {
-  const router = useRouter();
-  //pathname(string): 현재경로
-  const isActive = (rt) => (rt === router.pathname ? "active" : "");
-
   const { state, dispatch } = useContext(DataContext);
   const { auth, cart } = state;
-  // console.log(auth.user);
 
-  //로그아웃: 유저의 쿠키, 스토리지, 인증정보 초기화 후 성공 메세지
-  const onClickLogout = () => {
-    Cookies.remove("refreshtoken", { path: "api/auth/accessToken" });
-    localStorage.removeItem("firstLogin");
-    dispatch({ type: TYPES.AUTH, payload: {} });
-    return dispatch({
-      type: TYPES.NOTIFY,
-      payload: { success: "Logged out!" },
-    });
-  };
+  const router = useRouter();
+
+  //pathname(string): 현재경로
+  const isActive = (rt) => (rt === router.pathname ? "active" : "");
 
   return (
     // 부트스트랩 ver 4 - navbar
@@ -96,48 +84,7 @@ const NavBar = () => {
               </li>
             ) : (
               //인증 후: Dropdown-menu
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {/* user image */}
-                  <img
-                    src={auth.user.avatar}
-                    alt={auth.user.avatar}
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      marginRight: "4px",
-                      marginBottom: "3px",
-                    }}
-                  />
-                  {/* user name */}
-                  {auth.user.name}
-                </a>
-
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
-                >
-                  {/* Profile */}
-                  <Link href="/profile">
-                    <a className="dropdown-item">Profile</a>
-                  </Link>
-                  {/* Logout */}
-                  <button
-                    className="dropdown-item"
-                    type="button"
-                    onClick={onClickLogout}
-                  >
-                    Logout
-                  </button>
-                </div>
-              </li>
+              <DropdownMenu auth={auth} dispatch={dispatch} />
             )
           }
         </ul>
