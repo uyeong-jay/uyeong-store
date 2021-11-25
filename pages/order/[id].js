@@ -6,7 +6,7 @@ import OrderDetail from "../../components/order/OrderDetail";
 
 const DetailOrder = () => {
   const { state, dispatch } = useContext(DataContext);
-  const { orders } = state;
+  const { auth, orders } = state;
 
   const router = useRouter();
   // console.log(router); //back, push, query, route, pathname...
@@ -18,8 +18,10 @@ const DetailOrder = () => {
     //order._id(여러개), router.query.id(하나)
     const newArr = orders.filter((order) => order._id === router.query.id);
     setNewOrders(newArr); // newArr: [{해당id의 주문정보}]
+    console.log("a");
   }, [orders]);
 
+  if (!auth.user) return null; // !로그인 시 null
   return (
     <div className="my-3">
       <Head>
@@ -46,7 +48,7 @@ const DetailOrder = () => {
         }}
       >
         {/* fontawsome - long arrow (+ aria-hidden="true") */}
-        <button className="btn btn-dark mt-1" onClick={() => router.back()}>
+        <button className="btn btn-info mt-1" onClick={() => router.back()}>
           <i className="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
           &nbsp;&nbsp;Go&nbsp;Back
         </button>
