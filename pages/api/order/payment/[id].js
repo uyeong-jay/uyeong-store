@@ -16,22 +16,23 @@ const paymentOrder = async (req, res) => {
   try {
     const result = await auth(req, res);
 
-    // if (result.role === "user") {
-    const { id } = req.query;
-    const { paymentId } = req.body;
+    //user일때만 (admin일땐 직접 다룰수 있음)
+    if (result.role === "user") {
+      const { id } = req.query;
+      const { paymentId } = req.body;
 
-    await Orders.findOneAndUpdate(
-      { _id: id },
-      {
-        paid: true,
-        dateOfPayment: new Date().toISOString(),
-        paymentId,
-        method: "Paypal",
-      }
-    );
+      await Orders.findOneAndUpdate(
+        { _id: id },
+        {
+          paid: true,
+          dateOfPayment: new Date().toISOString(),
+          paymentId,
+          method: "Paypal",
+        }
+      );
 
-    res.json({ msg: "Payment success!" });
-    // }
+      res.json({ msg: "Payment success!" });
+    }
   } catch (err) {
     return res.status(500).json({ err: err.message });
   }

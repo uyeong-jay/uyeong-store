@@ -15,17 +15,18 @@ export default async (req, res) => {
 const deliveredOrder = async (req, res) => {
   try {
     const result = await auth(req, res);
+
     if (result.role !== "admin")
       return res.status(400).json({ err: "Authentication is not valid." });
 
+    //admin일때만
     const { id } = req.query;
-
     const order = await Orders.findOne({ _id: id });
 
     if (order.paid) {
+      //paypal로 결제시의 result
       await Orders.findOneAndUpdate({ _id: id }, { delivered: true });
 
-      //result 보내주기
       res.json({
         msg: "Updated success!",
         result: {
@@ -36,6 +37,7 @@ const deliveredOrder = async (req, res) => {
         },
       });
     } else {
+      //현금으로 결제시의 result
       await Orders.findOneAndUpdate(
         { _id: id },
         {

@@ -60,6 +60,7 @@ const PaypalBtn = ({ order }) => {
                   payload: { error: res.err },
                 }); //에러 메세지
 
+              //order상태에 paid, dateOfPayment 변경 / paymentId, method 추가
               dispatch(
                 updateItem(
                   orders,
@@ -67,13 +68,13 @@ const PaypalBtn = ({ order }) => {
                   {
                     ...order,
                     paid: true,
-                    dateOfpayment: create_time,
+                    dateOfPayment: create_time,
                     paymentId: payer.payer_id,
                     method: "Paypal",
                   },
                   TYPES.ADD_ORDERS
                 )
-              ); //paid, dateOfpayment 변경 / paymentId, method 추가
+              );
 
               return dispatch({
                 type: TYPES.NOTIFY,
