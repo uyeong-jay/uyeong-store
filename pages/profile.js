@@ -46,7 +46,7 @@ const profile = () => {
   };
 
   //유저 정보 업데이트 함수
-  const updateInfo = async () => {
+  const updateUserInfo = async () => {
     dispatch({ type: TYPES.NOTIFY, payload: { loading: true } });
 
     let media;
@@ -74,7 +74,7 @@ const profile = () => {
     });
   };
 
-  //프로필 업데이트( with updatePassword, updateInfo)
+  //프로필 업데이트( with updatePassword, updateUserInfo)
   const onClickUpdate = (e) => {
     //input에 password가 입력되어 있을때
     if (password) {
@@ -85,7 +85,7 @@ const profile = () => {
     }
 
     //avatar에 file이 있거나, 이름을 바꿨을때
-    if (avatar || name !== auth.user.name) updateInfo();
+    if (avatar || name !== auth.user.name) updateUserInfo();
   };
 
   //프로필사진 업로드
