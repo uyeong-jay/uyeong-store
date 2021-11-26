@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import OrderItem from "./OrderItem";
 import PaypalBtn from "../PaypalBtn";
 import { patchData } from "../../utils/fetchData";
@@ -64,10 +64,18 @@ const OrderDetail = ({ order, state, dispatch }) => {
         {/* delivery-info */}
         <div className="my-5 text-secondary">
           <h3 className="my-3">Delivery</h3>
-          <p>Name:&nbsp;{user.name}</p>
-          <p>Email:&nbsp;{user.email}</p>
-          <p>Address:&nbsp;{address}</p>
-          <p>Mobile:&nbsp;{mobile}</p>
+          <p>
+            Name:&nbsp;<em>{user.name}</em>
+          </p>
+          <p>
+            Email:&nbsp;<em>{user.email}</em>
+          </p>
+          <p>
+            Address:&nbsp;<em>{address}</em>
+          </p>
+          <p>
+            Mobile:&nbsp;<em>{mobile}</em>
+          </p>
         </div>
 
         {/* check-delivered */}
@@ -78,7 +86,7 @@ const OrderDetail = ({ order, state, dispatch }) => {
           role="alert"
           style={{ marginTop: "-30px", marginBottom: "50px" }}
         >
-          {delivered ? `Deliverd on ${updatedAt}` : "Not Delivered"}
+          {delivered ? `Delivered on ${updatedAt}` : "Not Delivered"}
           {auth.user.role === "admin" && !delivered && (
             <button
               className="btn btn-info"
@@ -92,8 +100,16 @@ const OrderDetail = ({ order, state, dispatch }) => {
         {/* payment - info */}
         <div className="text-secondary">
           <h3 className="my-3">Payment</h3>
-          <p>Method: {method}</p>
-          <p>Payment ID: {paymentId}</p>
+          {method && (
+            <p>
+              Method:&nbsp;<em>{method}</em>
+            </p>
+          )}
+          {paymentId && (
+            <p>
+              Payment ID:&nbsp;<em>{paymentId}</em>
+            </p>
+          )}
         </div>
         <div
           className={`alert ${
