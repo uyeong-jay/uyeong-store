@@ -4,4 +4,5 @@ export const TYPES = {
   ADD_CART: "ADD_CART",
   ADD_MODAL: "ADD_MODAL",
   ADD_ORDERS: "ADD_ORDERS",
+  ADD_USERS: "ADD_USERS",
 };

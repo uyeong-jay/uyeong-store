@@ -15,6 +15,7 @@ export const DataProvider = ({ children }) => {
     cart: [], // [ (product): {제품정보}, ... ]
     modal: {}, // { data: [cart정보 전체], id: "", title: "" }
     orders: [], // [ {주문정보}, ... ]
+    users: [], // [ {유저정보}, ... ]
   };
 
   //useReducer
@@ -53,15 +54,34 @@ export const DataProvider = ({ children }) => {
     localStorage.setItem("user_cart", JSON.stringify(cart));
   }, [cart]);
 
-  //token이 다시 넣어질때 마다 주문 했던 목록 상태 업데이트
+  //token이 다시 넣어질때 마다 주문목록(orders) 상태 데이터 업데이트
+  //+ admin으로 로그인 한 경우 유저정보(users) 상태 데이터 업데이트
+  //+ 로그아웃시 데이터 초기화
   useEffect(() => {
     if (auth.token) {
       getData("order", auth.token).then((res) => {
         if (res.err)
           return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
 
-        return dispatch({ type: TYPES.ADD_ORDERS, payload: res.orders }); //orders: 주문된 목록(배열)
+        return dispatch({ type: TYPES.ADD_ORDERS, payload: res.orders }); //orders: [주문된 목록]
       });
+
+      if (auth.user.role === "admin") {
+        getData("user", auth.token).then((res) => {
+          // console.log(res); // { users : [ { email: '', name: '', ... }} ]}
+          if (res.err)
+            return dispatch({
+              type: TYPES.NOTIFY,
+              payload: { error: res.err },
+            }); //에러
+
+          return dispatch({ type: TYPES.ADD_USERS, payload: res.users }); //유저정보 users상태 데이터에 넣기
+        });
+      }
+    } else {
+      //위의 조건에 맞지 않을 경우(ex 로그아웃시)
+      dispatch({ type: TYPES.ADD_ORDERS, payload: [] }); //orders 데이터 초기화
+      return dispatch({ type: TYPES.ADD_USERS, payload: [] }); //users 데이터 초기화
     }
   }, [auth.token]);
 
