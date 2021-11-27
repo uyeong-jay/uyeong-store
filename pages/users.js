@@ -5,8 +5,9 @@ import User from "../components/user/user";
 
 const Users = () => {
   const { state, dispatch } = useContext(DataContext);
-  const { users } = state;
+  const { auth, users } = state;
 
+  if (!auth.user) return null; //인증된 유저만
   return (
     <div className="table-responsive">
       <Head>

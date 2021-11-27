@@ -1,18 +1,22 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { TYPES } from "../../store/types";
 
 const DropdownMenu = ({ auth, dispatch }) => {
+  const router = useRouter();
+
   //로그아웃
   const onClickLogout = () => {
     Cookies.remove("refreshtoken", { path: "api/auth/accessToken" }); //유저 쿠키 삭제
     localStorage.removeItem("firstLogin"); //스토리지 삭제
     dispatch({ type: TYPES.AUTH, payload: {} }); //유저 인증 정보 초기화
-    return dispatch({
+    dispatch({
       type: TYPES.NOTIFY,
       payload: { success: "Logged out!" },
     }); //성공메세지
+    return router.push("/"); //홈으로 리다이렉트
   };
 
   // admin전용 메뉴 (admin으로 로그인시 보임)
