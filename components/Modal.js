@@ -8,7 +8,7 @@ const Modal = () => {
   const { modal } = state; // modal: { data: [], id: "", title: "" }
 
   const onClickDelete = () => {
-    dispatch(deleteItem(modal.data, modal.id, TYPES.ADD_CART)); //modal.data(cart전체)중 일치id 외 나머지만 cart에 남겨두기
+    dispatch(deleteItem(modal.data, modal.id, modal.type)); //modal.data(cart전체)중 일치id 외 나머지만 cart에 남겨두기
     return dispatch({ type: TYPES.ADD_MODAL, payload: {} }); //modal 초기화
   };
 

@@ -56,11 +56,12 @@ const CartItem = ({ item, cart, dispatch }) => {
         </button>
       </td>
 
-      {/* cart-delete-icon */}
+      {/* delete icon - cart */}
       <td className="align-middle" style={{ width: "20px", cursor: "pointer" }}>
         {/* font awesome - delete (+ aria-hidden ) (+ Modal 컴포넌트 적용)*/}
         <i
-          className="far fa-trash-alt text-danger"
+          className="fas fa-trash-alt text-danger"
+          title="Remove"
           aria-hidden="true"
           data-toggle="modal"
           data-target="#exampleModal"
@@ -68,9 +69,14 @@ const CartItem = ({ item, cart, dispatch }) => {
           onClick={() =>
             dispatch({
               type: TYPES.ADD_MODAL,
-              payload: { data: cart, id: item._id, title: item.title },
+              payload: {
+                data: cart,
+                id: item._id,
+                title: item.title,
+                type: TYPES.ADD_CART,
+              },
             })
-          } //icon클릭시: cart전체, 제품id, 제품title 전달
+          } //icon클릭시: cart전체, 제품id, 제품title type전달
         ></i>
       </td>
     </tr>
