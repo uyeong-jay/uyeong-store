@@ -9,6 +9,7 @@ export const DataContext = createContext();
 
 //provider 생성
 export const DataProvider = ({ children }) => {
+  //글로벌 state
   const initialState = {
     notify: {}, // { loading: "", success: "", error: "" }
     auth: {}, // { user: {유저정보}, token: "" }
@@ -16,6 +17,7 @@ export const DataProvider = ({ children }) => {
     modal: {}, // { data: [cart정보 전체], id: "", title: "" }
     orders: [], // [ {주문정보}, ... ]
     users: [], // [ {유저정보}, ... ]
+    categories: [],
   };
 
   //useReducer
@@ -36,6 +38,16 @@ export const DataProvider = ({ children }) => {
             token: res.access_token,
             user: res.user,
           },
+        });
+      });
+
+      getData("categories").then((res) => {
+        if (res.err)
+          return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
+
+        return dispatch({
+          type: TYPES.ADD_CATEGORIES,
+          payload: res.categories,
         });
       });
     }
