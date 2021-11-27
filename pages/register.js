@@ -44,7 +44,7 @@ const Register = () => {
     return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
   };
 
-  //redirect - 홈
+  //인증이 된 유저일 경우 홈으로 리다이렉트
   useEffect(() => {
     if (Object.keys(auth).length !== 0) router.push("/");
   }, [auth]);

@@ -28,7 +28,7 @@ const deliveredOrder = async (req, res) => {
       await Orders.findOneAndUpdate({ _id: id }, { delivered: true });
 
       res.json({
-        msg: "Updated success!",
+        msg: "Update Success!",
         result: {
           paid: true, //배송완료 >> 돈을 이미 낸 상태
           dateOfPayment: order.dateOfPayment,
@@ -50,7 +50,7 @@ const deliveredOrder = async (req, res) => {
 
       //result 보내주기
       res.json({
-        msg: "Updated success!",
+        msg: "Update Success!",
         result: {
           paid: true,
           dateOfPayment: new Date().toISOString(),

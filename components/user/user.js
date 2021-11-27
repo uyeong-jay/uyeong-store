@@ -7,7 +7,6 @@ const User = ({ user, index, state, dispatch }) => {
 
   const { _id, avatar, name, email, role, root } = user;
 
-  if (!auth.user.root) return null;
   return (
     <tr>
       <th>{index + 1}</th>

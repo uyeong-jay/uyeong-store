@@ -31,7 +31,7 @@ const paymentOrder = async (req, res) => {
         }
       );
 
-      res.json({ msg: "Payment success!" });
+      res.json({ msg: "Payment Success!" });
     }
   } catch (err) {
     return res.status(500).json({ err: err.message });

@@ -18,7 +18,6 @@ const DetailOrder = () => {
     //order._id(여러개), router.query.id(하나)
     const newArr = orders.filter((order) => order._id === router.query.id);
     setNewOrders(newArr); // newArr: [{해당id의 주문정보}]
-    console.log("a");
   }, [orders]);
 
   if (!auth.user) return null; // !로그인 시 null
