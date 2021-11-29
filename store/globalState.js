@@ -13,11 +13,11 @@ export const DataProvider = ({ children }) => {
   const initialState = {
     notify: {}, // { loading: "", success: "", error: "" }
     auth: {}, // { user: {유저정보}, token: "" }
-    cart: [], // [ (product): {제품정보}, ... ]
-    modal: {}, // { data: [cart정보 전체], id: "", title: "" }
-    orders: [], // [ {주문정보}, ... ]
-    users: [], // [ {유저정보}, ... ]
-    categories: [],
+    cart: [], // [ {product정보}, ... ]
+    modal: {}, // { data: [], id: "", title: "" }
+    orders: [], // [ {order정보}, ... ]
+    users: [], // [ {user정보}, ... ]
+    categories: [], // [ {category정보}, ... ]
   };
 
   //useReducer

@@ -29,17 +29,20 @@ export const addToCart = (product, cart) => {
 //count quantity
 export const count = (cart, productId, sign) => {
   const newCart = [...cart];
+
   if (sign === "-")
     newCart.filter((item) => item._id === productId)[0].quantity -= 1;
+
   if (sign === "+")
     newCart.filter((item) => item._id === productId)[0].quantity += 1;
+
   return { type: TYPES.ADD_CART, payload: newCart };
 };
 
 //delete item
 export const deleteItem = (data, productId, type) => {
   const newData = data.filter((item) => item._id !== productId); //인자로 들어온 item 외 나머지를 반환
-  return { type, payload: newData };
+  return { type, payload: newData }; //type: type
 };
 
 //update item

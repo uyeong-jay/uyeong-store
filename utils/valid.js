@@ -1,12 +1,12 @@
 //email 유효성 검사
 // (stack overflow) How to validate an email address in JavaScript( regex )
 function validateEmail(email) {
-  const re =
+  const emailRegex =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
+  return emailRegex.test(email);
 }
 
-//유저 유효성 검사 유틸
+//유효성 검사 유틸
 const valid = (name, email, password, cf_password) => {
   if (!name || !email || !password) {
     return "Please add all fileds.";
