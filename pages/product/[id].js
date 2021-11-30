@@ -36,7 +36,7 @@ const DetailProduct = (props) => {
     dispatch(addToCart(product, cart));
 
     //cart 페이지로
-    return router.push("/cart");
+    if (product.inStock) return router.push("/cart");
   };
 
   return (
