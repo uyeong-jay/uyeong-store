@@ -16,16 +16,28 @@ const Modal = () => {
         return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } }); //성공
       });
     }
-    dispatch(deleteItem(modal.data, modal.id, modal.type)); //modal.data(cart전체)중 일치id 외 나머지만 cart에 남겨두기
+
+    if (modal.type === TYPES.ADD_CATEGORIES) {
+      deleteData(`categories/${modal.id}`, auth.token).then((res) => {
+        if (res.err)
+          return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } }); //에러
+        return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } }); //성공
+      });
+    }
+
+    //ADD_CART, ADD_USERS, ADD_CATEGORIES
+    dispatch(deleteItem(modal.data, modal.id, modal.type)); //modal.data중 일치id 외 나머지만 남겨두기
     return dispatch({ type: TYPES.ADD_MODAL, payload: {} }); //modal 초기화
   };
 
-  //modal 내용
+  //modal-body 내용
   const modalbodyMsg = useMemo(() => {
     if (modal.type === TYPES.ADD_CART)
       return "Do you want to delete this item?";
     if (modal.type === TYPES.ADD_USERS)
       return "Do you want to delete this user?";
+    if (modal.type === TYPES.ADD_CATEGORIES)
+      return "Do you want to delete this category?";
   }, [modal.type]);
 
   return (
