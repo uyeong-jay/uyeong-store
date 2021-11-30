@@ -1,14 +1,17 @@
 import React, { useContext, useState } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
+import { updateItem } from "../store/actions";
 import { TYPES } from "../store/types";
-import { postData } from "../utils/fetchData";
+import { putData, postData } from "../utils/fetchData";
+import Category from "../components/category/category";
 
 const Categories = () => {
   const { state, dispatch } = useContext(DataContext);
   const { auth, categories } = state;
 
   const [name, setName] = useState("");
+  const [id, setId] = useState("");
 
   const onClickCreate = async () => {
     //admin일때
@@ -18,7 +21,7 @@ const Categories = () => {
         payload: { error: "Authentication is not vaild." },
       });
 
-    //name이 채워 졌을때
+    //name이 채워져 있지 않을 때
     if (!name)
       return dispatch({
         type: TYPES.NOTIFY,
@@ -27,26 +30,47 @@ const Categories = () => {
 
     dispatch({ type: TYPES.NOTIFY, payload: { loading: true } }); //로딩
 
-    const res = await postData("categories", { name }, auth.token);
-    // console.log(res.newCategory); // newCategory: {  name: "", _id: "", createdAt: "", updatedAt: "", __v: 0 }
+    let res;
+    if (id) {
+      res = await putData(`categories/${id}`, { name }, auth.token);
+      // console.log(res.category); // category: {  name: "", _id: "", createdAt: "", updatedAt: "", __v: 0 }
 
-    if (res.err)
-      return dispatch({
-        type: TYPES.NOTIFY,
-        payload: { error: res.err },
-      }); //에러
+      if (res.err)
+        return dispatch({
+          type: TYPES.NOTIFY,
+          payload: { error: res.err },
+        }); //에러
 
-    dispatch({
-      type: TYPES.ADD_CATEGORIES,
-      payload: [...categories, res.newCategory],
-    }); //categories에 newCategory추가
+      dispatch(updateItem(categories, id, res.category, TYPES.ADD_CATEGORIES)); //categories중 하나(category)를  res.category로 변경(업데이트)
+    } else {
+      res = await postData("categories", { name }, auth.token);
+      // console.log(res.newCategory); // newCategory: {  name: "", _id: "", createdAt: "", updatedAt: "", __v: 0 }
+
+      if (res.err)
+        return dispatch({
+          type: TYPES.NOTIFY,
+          payload: { error: res.err },
+        }); //에러
+
+      dispatch({
+        type: TYPES.ADD_CATEGORIES,
+        payload: [...categories, res.newCategory],
+      }); //categories에 newCategory추가
+    }
 
     setName(""); //input 초기화
+    setId(""); //id 초기화
 
     return dispatch({
       type: TYPES.NOTIFY,
       payload: { success: res.msg },
     }); //성공
+  };
+
+  const onClickEditCategory = (category) => {
+    // console.log(category); // category: {  name: "", _id: "", createdAt: "", updatedAt: "", __v: 0 }
+    setName(category.name);
+    setId(category._id);
   };
 
   return (
@@ -55,7 +79,8 @@ const Categories = () => {
         <title>Categories</title>
       </Head>
 
-      <div className="input-group mb-3">
+      <div className="input-group my-4">
+        {/* category 입력창 */}
         <input
           className="form-control"
           type="text"
@@ -64,21 +89,21 @@ const Categories = () => {
           placeholder="Add a new category"
         />
 
-        <button className="btn btn-secondary ml-2" onClick={onClickCreate}>
-          Create
+        {/* button - creat, update  */}
+        <button className="btn btn-info ml-2" onClick={onClickCreate}>
+          {id ? "Update" : "Create"}
         </button>
       </div>
 
+      {/* category */}
       {categories.map((category) => (
-        <div className="card" key={category._id}>
-          <div className="card-body d-flex justify-content-between">
-            {category.name}
-            <div style={{ cursor: "pointer" }}>
-              <i className="fas fa-edit mr-3 text-info"></i>
-              <i className="fas fa-trash-alt text-danger"></i>
-            </div>
-          </div>
-        </div>
+        <Category
+          key={category._id}
+          state={state}
+          dispatch={dispatch}
+          category={category}
+          onClickEditCategory={onClickEditCategory}
+        />
       ))}
     </div>
   );
