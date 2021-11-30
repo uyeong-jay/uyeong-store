@@ -14,8 +14,8 @@ const profile = () => {
     password: "",
     cf_password: "",
   };
-  const [data, setData] = useState(initialState);
-  const { avatar, name, password, cf_password } = data;
+  const [userData, setUserData] = useState(initialState);
+  const { avatar, name, password, cf_password } = userData;
 
   const { state, dispatch } = useContext(DataContext);
   const { auth, notify } = state;
@@ -23,13 +23,13 @@ const profile = () => {
 
   //유저 이름 자동 채우기
   useEffect(() => {
-    if (auth.user) return setData({ ...data, name: auth.user.name });
+    if (auth.user) return setUserData({ ...userData, name: auth.user.name });
   }, [auth.user]);
 
   //input 데이터 저장
   const onChangeInput = (e) => {
     const { value, name } = e.currentTarget;
-    setData({ ...data, [name]: value }); //input 데이터 각각 저장
+    setUserData({ ...userData, [name]: value }); //input 데이터 각각 저장
     return dispatch({ type: TYPES.NOTIFY, payload: {} }); //notify 메세지 초기화
   };
 
@@ -116,7 +116,7 @@ const profile = () => {
       });
 
     //파일 데이터 avatar에 저장
-    setData({ ...data, avatar: file });
+    setUserData({ ...userData, avatar: file });
   };
 
   if (!auth.user) return null; // !로그인 시 null
