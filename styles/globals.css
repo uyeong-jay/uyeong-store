@@ -18,15 +18,18 @@ a {
 
 img {
   object-fit: cover;
-  object-position: 0 70%;
+  /* object-position: 0 70%; */
 }
 
 
 /* ------------- Loading  ------------- */
 @import url("./loading.css");
 
+/* ------------- Profile  ------------- */
+@import url("./profile.css");
+
 /* ------------- Products  ------------- */
 @import url("./product.css");
 
-/* ------------- Profile  ------------- */
-@import url("./profile.css");
+/* ------------- Products Manager  ------------- */
+@import url("./products_manager.css");
