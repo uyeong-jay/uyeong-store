@@ -51,7 +51,7 @@ const DetailProduct = (props) => {
         <img
           src={product.images[tab].url}
           alt={product.images[tab].url}
-          className="d-block img-thumbnail rounded mt-4 w-100"
+          className="d-block img-thumbnail mt-4 w-100"
           style={{ height: "350px" }}
         />
 
@@ -62,7 +62,7 @@ const DetailProduct = (props) => {
               key={index}
               src={img.url}
               alt={img.url}
-              className={`img-thumbnail rounded ${isActive(index)}`}
+              className={`img-thumbnail ${isActive(index)}`}
               style={{ width: "20%", height: "80px" }}
               onClick={() => setTab(index)}
             />

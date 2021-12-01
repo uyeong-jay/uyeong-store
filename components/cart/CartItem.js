@@ -11,7 +11,7 @@ const CartItem = ({ item, cart, dispatch }) => {
         <img
           src={item.images[0].url}
           alt={item.images[0].url}
-          className="img-thumbnail rounded"
+          className="img-thumbnail"
           style={{ minWidth: "80px", height: "80px" }}
         />
       </td>
