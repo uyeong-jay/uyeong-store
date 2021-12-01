@@ -30,7 +30,7 @@ const Categories = () => {
 
     dispatch({ type: TYPES.NOTIFY, payload: { loading: true } }); //로딩
 
-    let res;
+    let res; //res를 활용하기 위해 fetch대신 async/await 사용
     if (id) {
       res = await putData(`categories/${id}`, { name }, auth.token);
       // console.log(res.category); // category: {  name: "", _id: "", createdAt: "", updatedAt: "", __v: 0 }

@@ -47,22 +47,24 @@ const profile = () => {
 
   //유저 정보 업데이트 함수
   const updateUserInfo = async () => {
-    dispatch({ type: TYPES.NOTIFY, payload: { loading: true } });
+    dispatch({ type: TYPES.NOTIFY, payload: { loading: true } }); //로딩
 
     let media;
+
+    //avatar존재시 imageUpload 유틸에 avatar파일 객체로 전달
     if (avatar) media = await imageUpload([avatar]);
-    //avatar: {name: "", ...} >> 이미지 정보(객체)
-    //[avatar]: [ 0: {name: "", ...} ] >>  유사배열(객체)안 이미지 정보(객체)
     // console.log(typeof [avatar]); //object
-    //데이터를 받아오면: console.log(media); // [ {public_id: "" url: ""}, ... ]
+    // [avatar]: [ 0: {name: "", ...} ] >>  유사배열(객체)안 이미지 정보(객체)
+    // 데이터를 받아오면: console.log(media); // [ {public_id: "" url: ""}, ... ]
+    // >> cloud에 저장된후, 반환값 media에 저장
 
     patchData(
       "user",
-      { name, avatar: avatar ? media[0].url : auth.user.avatar },
+      { name, avatar: avatar ? media[0].url : auth.user.avatar }, //name, avatar 전달
       auth.token
     ).then((res) => {
       if (res.err)
-        return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
+        return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } }); //에러
 
       // 유저 인증정보 상태 데이터 업데이트 하기 (+ 토큰 다시 넣어주기)
       dispatch({
@@ -70,7 +72,7 @@ const profile = () => {
         payload: { token: auth.token, user: res.user },
       });
 
-      return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } });
+      return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } }); //성공
     });
   };
 
@@ -94,14 +96,14 @@ const profile = () => {
 
     const file = e.currentTarget.files[0];
 
-    //파일 유무 에러
+    //파일 선택 에러
     if (!file)
       return dispatch({
         type: TYPES.NOTIFY,
         payload: { error: "No files selected!." },
       });
 
-    //파일 사이즈 에러
+    //파일 크기 에러
     if (file.size > 1024 * 1024)
       return dispatch({
         type: TYPES.NOTIFY,
@@ -115,7 +117,7 @@ const profile = () => {
         payload: { error: "Image format is incorrect." },
       });
 
-    //파일 데이터 avatar에 저장
+    //파일 avatar에 저장
     setUserData({ ...userData, avatar: file });
   };
 

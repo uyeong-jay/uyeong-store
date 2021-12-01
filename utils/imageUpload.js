@@ -25,5 +25,5 @@ export const imageUpload = async (images) => {
     imgArr.push({ public_id: data.public_id, url: data.secure_url });
   }
 
-  return imgArr;
+  return imgArr; //이미지들 담긴 배열 반환
 };
