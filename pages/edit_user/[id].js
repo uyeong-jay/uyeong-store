@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { DataContext } from "../../store/globalState";
@@ -46,7 +46,7 @@ const EditUser = () => {
 
       //role 변경 >> admin or user
       dispatch(
-        updateItem(users, editUser._id, { ...editUser, role }, TYPES.ADD_USERS)
+        updateItem(users, editUser._id, { ...editUser, role }, TYPES.USERS)
       );
 
       return dispatch({ type: TYPES.NOTIFY, payload: { success: res.msg } }); //성공

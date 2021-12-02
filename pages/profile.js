@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";

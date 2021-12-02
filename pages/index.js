@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import Head from "next/head";
 import { getData } from "../utils/fetchData";
 import ProductItem from "../components/product/ProductItem";
@@ -16,7 +16,11 @@ const Home = (props) => {
         <h2>No Products</h2>
       ) : (
         products.map((product) => (
-          <ProductItem key={product._id} product={product} />
+          <ProductItem
+            key={product._id}
+            product={product}
+            products={products}
+          />
         ))
       )}
     </div>

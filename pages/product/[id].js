@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getData } from "../../utils/fetchData";
@@ -90,6 +90,9 @@ const DetailProduct = (props) => {
 
         {/* description */}
         <p className="my-4">{product.description}</p>
+
+        {/* content */}
+        <p className="my-4">{product.content}</p>
 
         {/* button - cart */}
         <button

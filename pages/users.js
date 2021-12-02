@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
 import User from "../components/user/user";
