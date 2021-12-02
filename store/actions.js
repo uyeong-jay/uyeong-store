@@ -21,7 +21,7 @@ export const addToCart = (product, cart) => {
 
   //cart에 product추가(+ product에 quantity 추가)
   return {
-    type: TYPES.ADD_CART,
+    type: TYPES.CART,
     payload: [...cart, { ...product, quantity: 1 }],
   };
 };
@@ -36,7 +36,7 @@ export const count = (cart, productId, sign) => {
   if (sign === "+")
     newCart.filter((item) => item._id === productId)[0].quantity += 1;
 
-  return { type: TYPES.ADD_CART, payload: newCart };
+  return { type: TYPES.CART, payload: newCart };
 };
 
 //delete item

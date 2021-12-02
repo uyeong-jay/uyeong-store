@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
 import { updateItem } from "../store/actions";
@@ -41,7 +41,7 @@ const Categories = () => {
           payload: { error: res.err },
         }); //에러
 
-      dispatch(updateItem(categories, id, res.category, TYPES.ADD_CATEGORIES)); //categories중 하나(category)를  res.category로 변경(업데이트)
+      dispatch(updateItem(categories, id, res.category, TYPES.CATEGORIES)); //categories중 하나(category)를  res.category로 변경(업데이트)
     } else {
       res = await postData("categories", { name }, auth.token);
       // console.log(res.newCategory); // newCategory: {  name: "", _id: "", createdAt: "", updatedAt: "", __v: 0 }
@@ -53,7 +53,7 @@ const Categories = () => {
         }); //에러
 
       dispatch({
-        type: TYPES.ADD_CATEGORIES,
+        type: TYPES.CATEGORIES,
         payload: [...categories, res.newCategory],
       }); //categories에 newCategory추가
     }

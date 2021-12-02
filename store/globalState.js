@@ -14,15 +14,16 @@ export const DataProvider = ({ children }) => {
     notify: {}, // { loading: "", success: "", error: "" }
     auth: {}, // { user: {유저정보}, token: "" }
     cart: [], // [ {product정보}, ... ]
-    modal: {}, // { data: [], id: "", title: "" }
+    modal: {}, // { data: [], id: "", title: "", type: ~ }
     orders: [], // [ {order정보}, ... ]
     users: [], // [ {user정보}, ... ]
     categories: [], // [ {category정보}, ... ]
+    isRefreshing: false,
   };
 
   //useReducer
   const [state, dispatch] = useReducer(reducers, initialState);
-  const { cart, auth } = state;
+  const { auth, cart } = state;
 
   //-------------localStorage 정보 유지-------------
   //스토리지에 firstLogin이 존재할시: auth정보 다시dispatch >> 새로고침시에도 유저 정보 유지
@@ -46,7 +47,7 @@ export const DataProvider = ({ children }) => {
           return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
 
         return dispatch({
-          type: TYPES.ADD_CATEGORIES,
+          type: TYPES.CATEGORIES,
           payload: res.categories,
         });
       });
@@ -57,8 +58,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const user_cart = JSON.parse(localStorage.getItem("user_cart")); //user_cart: [ product:{제품정보}, ... ]
 
-    if (user_cart)
-      return dispatch({ type: TYPES.ADD_CART, payload: user_cart });
+    if (user_cart) return dispatch({ type: TYPES.CART, payload: user_cart });
   }, []);
 
   //초기 user_cart 생성 후, cart에 변화있을 때마다 스토리지에 바뀐 cart 저장
@@ -75,7 +75,7 @@ export const DataProvider = ({ children }) => {
         if (res.err)
           return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
 
-        return dispatch({ type: TYPES.ADD_ORDERS, payload: res.orders }); //orders: [주문된 목록]
+        return dispatch({ type: TYPES.ORDERS, payload: res.orders }); //orders: [주문된 목록]
       });
 
       if (auth.user.role === "admin") {
@@ -87,13 +87,13 @@ export const DataProvider = ({ children }) => {
               payload: { error: res.err },
             }); //에러
 
-          return dispatch({ type: TYPES.ADD_USERS, payload: res.users }); //유저정보 users상태 데이터에 넣기
+          return dispatch({ type: TYPES.USERS, payload: res.users }); //유저정보 users상태 데이터에 넣기
         });
       }
     } else {
       //위의 조건에 맞지 않을 경우(ex 로그아웃시)
-      dispatch({ type: TYPES.ADD_ORDERS, payload: [] }); //orders 데이터 초기화
-      return dispatch({ type: TYPES.ADD_USERS, payload: [] }); //users 데이터 초기화
+      dispatch({ type: TYPES.ORDERS, payload: [] }); //orders 데이터 초기화
+      return dispatch({ type: TYPES.USERS, payload: [] }); //users 데이터 초기화
     }
   }, [auth.token]);
 

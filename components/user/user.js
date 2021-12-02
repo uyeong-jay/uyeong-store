@@ -65,12 +65,12 @@ const User = ({ user, index, state, dispatch }) => {
             data-target="#exampleModal"
             onClick={() =>
               dispatch({
-                type: TYPES.ADD_MODAL,
+                type: TYPES.MODAL,
                 payload: {
                   data: users,
                   id: user._id,
                   title: user.name,
-                  type: TYPES.ADD_USERS,
+                  type: TYPES.USERS,
                 },
               })
             }

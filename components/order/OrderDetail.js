@@ -47,7 +47,7 @@ const OrderDetail = ({ order, state, dispatch }) => {
             method,
             delivered,
           },
-          TYPES.ADD_ORDERS
+          TYPES.ORDERS
         )
       ); //update order
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { patchData } from "../utils/fetchData";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
@@ -72,7 +72,7 @@ const PaypalBtn = ({ order }) => {
                     paymentId: payer.payer_id,
                     method: "Paypal",
                   },
-                  TYPES.ADD_ORDERS
+                  TYPES.ORDERS
                 )
               );
 

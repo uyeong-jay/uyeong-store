@@ -68,12 +68,12 @@ const CartItem = ({ item, cart, dispatch }) => {
           style={{ fontSize: "18px" }}
           onClick={() =>
             dispatch({
-              type: TYPES.ADD_MODAL,
+              type: TYPES.MODAL,
               payload: {
                 data: cart,
                 id: item._id,
                 title: item.title,
-                type: TYPES.ADD_CART,
+                type: TYPES.CART,
               },
             })
           } //icon클릭시: cart전체, 제품id, 제품title type전달

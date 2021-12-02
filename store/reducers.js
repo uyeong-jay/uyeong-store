@@ -13,30 +13,35 @@ const reducers = (state, action) => {
         ...state,
         auth: action.payload,
       };
-    case TYPES.ADD_CART:
+    case TYPES.CART:
       return {
         ...state,
         cart: action.payload,
       };
-    case TYPES.ADD_MODAL:
+    case TYPES.MODAL:
       return {
         ...state,
         modal: action.payload,
       };
-    case TYPES.ADD_ORDERS:
+    case TYPES.ORDERS:
       return {
         ...state,
         orders: action.payload,
       };
-    case TYPES.ADD_USERS:
+    case TYPES.USERS:
       return {
         ...state,
         users: action.payload,
       };
-    case TYPES.ADD_CATEGORIES:
+    case TYPES.CATEGORIES:
       return {
         ...state,
         categories: action.payload,
+      };
+    case TYPES.PRODUCT:
+      return {
+        ...state,
+        isRefreshing: action.payload,
       };
     default:
       return state;

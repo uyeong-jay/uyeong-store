@@ -6,7 +6,7 @@ const Category = ({ category, state, dispatch, onClickEditCategory }) => {
 
   return (
     // bootstrap 4 - card
-    <div className="card">
+    <div className="card text-capitalize">
       {/* card - body */}
       <div className="card-body d-flex justify-content-between">
         {category.name}
@@ -22,17 +22,17 @@ const Category = ({ category, state, dispatch, onClickEditCategory }) => {
           <i
             className="fas fa-trash-alt text-danger"
             style={{ fontSize: "18px" }}
-            // delete modal
+            // modal - delete
             data-toggle="modal"
             data-target="#exampleModal"
             onClick={() =>
               dispatch({
-                type: TYPES.ADD_MODAL,
+                type: TYPES.MODAL,
                 payload: {
                   data: categories,
                   id: category._id,
                   title: category.name,
-                  type: TYPES.ADD_CATEGORIES,
+                  type: TYPES.CATEGORIES,
                 },
               })
             }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -47,7 +47,7 @@ const Cart = () => {
           }
         }
 
-        return dispatch({ type: TYPES.ADD_CART, payload: newArr });
+        return dispatch({ type: TYPES.CART, payload: newArr });
       };
       newCartData();
     }
@@ -96,7 +96,7 @@ const Cart = () => {
             payload: { error: res.err },
           }); //에러 메세지
 
-        dispatch({ type: TYPES.ADD_CART, payload: [] }); //카트 비우기
+        dispatch({ type: TYPES.CART, payload: [] }); //카트 비우기
 
         const newOrder = {
           ...res.newOrder,
@@ -104,7 +104,7 @@ const Cart = () => {
         }; //user에 id대신 유저 정보(auth.user) 넣기
 
         dispatch({
-          type: TYPES.ADD_ORDERS,
+          type: TYPES.ORDERS,
           payload: [...orders, newOrder],
         }); //주문목록에 newOrder추가
 
