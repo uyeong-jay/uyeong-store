@@ -28,12 +28,15 @@ const Category = ({ category, state, dispatch, onClickEditCategory }) => {
             onClick={() =>
               dispatch({
                 type: TYPES.MODAL,
-                payload: {
-                  data: categories,
-                  id: category._id,
-                  title: category.name,
-                  type: TYPES.CATEGORIES,
-                },
+                payload: [
+                  {
+                    data: categories,
+                    id: category._id,
+                    title: category.name,
+                    content: "Do you want to delete this category?",
+                    type: TYPES.CATEGORIES,
+                  },
+                ],
               })
             }
           ></i>

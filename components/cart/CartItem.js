@@ -69,12 +69,15 @@ const CartItem = ({ item, cart, dispatch }) => {
           onClick={() =>
             dispatch({
               type: TYPES.MODAL,
-              payload: {
-                data: cart,
-                id: item._id,
-                title: item.title,
-                type: TYPES.CART,
-              },
+              payload: [
+                {
+                  data: cart,
+                  id: item._id,
+                  title: item.title,
+                  content: "Do you want to delete this item?",
+                  type: TYPES.CART,
+                },
+              ],
             })
           } //icon클릭시: cart전체, 제품id, 제품title type전달
         ></i>

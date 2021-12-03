@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
     notify: {}, // { loading: "", success: "", error: "" }
     auth: {}, // { user: {유저정보}, token: "" }
     cart: [], // [ {product정보}, ... ]
-    modal: {}, // { data: [], id: "", title: "", type: ~ }
+    modal: [], // [ { data: [], id: "", title: "", type: ~ }, ... ]
     orders: [], // [ {order정보}, ... ]
     users: [], // [ {user정보}, ... ]
     categories: [], // [ {category정보}, ... ]

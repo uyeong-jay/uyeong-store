@@ -66,12 +66,15 @@ const User = ({ user, index, state, dispatch }) => {
             onClick={() =>
               dispatch({
                 type: TYPES.MODAL,
-                payload: {
-                  data: users,
-                  id: user._id,
-                  title: user.name,
-                  type: TYPES.USERS,
-                },
+                payload: [
+                  {
+                    data: users,
+                    id: user._id,
+                    title: user.name,
+                    content: "Do you want to delete this user?",
+                    type: TYPES.USERS,
+                  },
+                ],
               })
             }
           ></i>
