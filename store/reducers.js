@@ -38,11 +38,6 @@ const reducers = (state, action) => {
         ...state,
         categories: action.payload,
       };
-    case TYPES.PRODUCT:
-      return {
-        ...state,
-        isRefreshing: action.payload,
-      };
     default:
       return state;
   }
