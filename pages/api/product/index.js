@@ -9,7 +9,7 @@ export default async (req, res) => {
     case "GET":
       await getProducts(req, res);
       break;
-    case "Post":
+    case "POST":
       await createProduct(req, res);
       break;
   }
