@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { DataContext } from "../../store/globalState";
 import { TYPES } from "../../store/types";
 import { imageUpload } from "../../utils/imageUpload";
-import { putData, postData } from "../../utils/fetchData";
+import { getData, putData, postData } from "../../utils/fetchData";
 
 //[[...id]]: Catch all routes - /create, /create/id1, /create/id1/id2
 const ProductsManager = () => {
@@ -24,11 +24,30 @@ const ProductsManager = () => {
   const { auth, categories } = state;
 
   const [images, setImages] = useState([]);
+  // console.log(typeof images); //object
   const [imgCount, setImgCount] = useState(0);
   const [onEdit, setOnEdit] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
+
+  //[[...id]] >> create/ , create/id , create/id/...
+  useEffect(() => {
+    if (id) {
+      // create/id , create/id/... (편집 페이지)
+      setOnEdit(true);
+      getData(`product/${id}`).then((res) => {
+        // console.lg(res) //{ product: {제품정보} }
+        setProduct(res.product); //제품정보 전체 저장
+        setImages(res.product.images); //이미지 정보들만 저장 [ 0: { public_id: "", url: "" }, ... ]
+      });
+    } else {
+      // create/ (생성 페이지)
+      setOnEdit(false);
+      setProduct(initialState); //초기화
+      setImages([]); //초기화
+    }
+  }, []);
 
   //input 데이터 저장
   const onChangeInput = (e) => {
@@ -84,17 +103,18 @@ const ProductsManager = () => {
     setImgCount((imgCount -= 1));
   };
 
+  //제품 생성 (input데이터, images)
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    //백으로 가기전에 미리 검사
+    //api로 가기전에 미리 검사
     if (auth.user.role !== "admin")
       return dispatch({
         type: TYPES.NOTIFY,
         payload: { error: "Authentication is not valid." },
       });
 
-    //백으로 가기전에 미리 검사
+    //api로 가기전에 미리 검사
     if (
       !title ||
       !price ||
@@ -107,40 +127,47 @@ const ProductsManager = () => {
       return dispatch({
         type: TYPES.NOTIFY,
         payload: { error: "Please add all the fields." },
-      });
+      }); //에러
 
     dispatch({ type: "NOTIFY", payload: { loading: true } }); //로딩
 
-    let media = []; // [ {public_id: "" url: ""}, ... ]
-    const imgNewURL = images.filter((img) => !img.url); //media배열에 존재하지 않는 image(객체)(url-x)
-    const imgOldURL = images.filter((img) => img.url); //media배열에 이미 존재하는 imgae(객체)(url-o)
-    // console.log(typeof imgNewURL, typeof imgOldURL); //object, object
+    let media = [];
 
-    //imgNewURL(객체)존재시 imageUpload 유틸에 imgNewURL(객체) 전달
-    if (imgNewURL.length > 0) media = await imageUpload(imgNewURL);
-    // >> cloud에 저장된후, 반환값을 media에 저장 by imageUpload
+    //새 이미지들만 담기
+    const newImages = images.filter((img) => !img.url);
+
+    //이미 올라가 있는 이미지들만 담기
+    const oldImages = images.filter((img) => img.url);
+
+    //이미지 새로 올리기 >> cloud에 저장된후, 반환값을 media에 저장 by imageUpload
+    //imageUpload 유틸에 newImages(객체) 전달
+    if (newImages.length > 0) media = await imageUpload(newImages);
     // console.log(media); // [ {public_id: "" url: ""}, ... ]
 
     let res; //res를 활용하기 위해 fetch대신 async/await 사용
+
+    //product(input)데이터와 images데이터 전달
     if (onEdit) {
+      //편집시
       res = await putData(
         `product/${id}`,
-        { ...product, images: [...imgOldURL, ...media] },
+        //oldImages: 이미 올라가 있는 이미지들, meida: 새이미지들
+        { ...product, images: [...oldImages, ...media] },
         auth.token
       );
-      if (res.err)
-        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
     } else {
+      //생성시
       res = await postData(
         "product",
-        { ...product, images: [...imgOldURL, ...media] },
+        { ...product, images: [...media] },
         auth.token
       );
-      if (res.err)
-        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
     }
 
-    return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+    if (res.err)
+      return dispatch({ type: "NOTIFY", payload: { error: res.err } }); //에러
+
+    return dispatch({ type: "NOTIFY", payload: { success: res.msg } }); //성공
   };
 
   return (
@@ -165,10 +192,12 @@ const ProductsManager = () => {
           <div className="row">
             {/* price */}
             <div className="col-sm-6">
+              <label htmlFor="price">Price</label>
               <input
                 className="d-block w-100 mb-4 p-2"
                 type="number"
                 name="price"
+                id="price"
                 value={price}
                 onChange={onChangeInput}
                 placeholder="Price"
@@ -177,10 +206,12 @@ const ProductsManager = () => {
 
             {/* inStock */}
             <div className="col-sm-6">
+              <label htmlFor="inStock">Stock</label>
               <input
                 className="d-block w-100 mb-4 p-2"
                 type="number"
                 name="inStock"
+                id="inStock"
                 value={inStock}
                 onChange={onChangeInput}
                 placeholder="Stock"
@@ -281,7 +312,7 @@ const ProductsManager = () => {
             className="float-right btn btn-primary mb-4 px-4"
             type="submit"
           >
-            Create
+            {onEdit ? "Update" : "Create"}
           </button>
         </div>
       </form>
