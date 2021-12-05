@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import Head from "next/head";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
-import valid from "../utils/valid";
+import { valid } from "../utils/valid";
 import { patchData } from "../utils/fetchData";
 import { imageUpload } from "../utils/imageUpload";
 import Orders from "../components/profile/Orders";
