@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import valid from "../utils/valid";
+import { valid } from "../utils/valid";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
 import { postData } from "../utils/fetchData";

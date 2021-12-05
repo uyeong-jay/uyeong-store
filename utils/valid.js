@@ -7,7 +7,7 @@ function validateEmail(email) {
 }
 
 //유효성 검사 유틸
-const valid = (name, email, password, cf_password) => {
+export const valid = (name, email, password, cf_password) => {
   if (!name || !email || !password) {
     return "Please add all fileds.";
   }
@@ -24,5 +24,3 @@ const valid = (name, email, password, cf_password) => {
     return "Confirm password did not match.";
   }
 };
-
-export default valid;
