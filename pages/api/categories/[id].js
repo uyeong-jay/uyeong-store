@@ -51,6 +51,7 @@ const deleteCategory = async (req, res) => {
 
     const { id } = req.query;
 
+    //해당 카테고리의 id를 가진 제품 찾기
     const products = await Products.findOne({ category: id });
 
     if (products)

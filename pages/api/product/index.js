@@ -60,7 +60,6 @@ class APIfeatures {
       console.log("5. sortBy:", sortBy);
 
       this.query = this.query.sort(sortBy);
-      console.log("6(7,8). this.query:", this.query);
     } else {
       this.query = this.query.sort("-createdAt");
       //7. this.query: Query { ~ }

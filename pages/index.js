@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { DataContext } from "../store/globalState";
 import { TYPES } from "../store/types";
 import { getData } from "../utils/fetchData";
-import ProductItem from "../components/product/ProductItem";
 import { filterSearch } from "../utils/filterSearch";
+import ProductItem from "../components/product/ProductItem";
+import Filter from "../components/Filter";
 
 // 첫 페이지: 나열된 product들
 const Home = (props) => {
@@ -18,8 +19,6 @@ const Home = (props) => {
 
   const router = useRouter();
 
-  console.log(Object.keys(router.query));
-
   //products 업데이트
   useEffect(() => {
     setProducts(props.products);
@@ -29,6 +28,7 @@ const Home = (props) => {
   //query가 없으면 항상 1 page
   useEffect(() => {
     if (Object.keys(router.query).length <= 0) setPage(1);
+    // console.log(Object.keys(router.query)); //ex) ['page']
   }, [router.query]);
 
   //체크 토글
@@ -81,6 +81,8 @@ const Home = (props) => {
       <Head>
         <title>UYeong Mall</title>
       </Head>
+
+      <Filter state={state} />
 
       {/* admin - check box, button */}
       {auth.user?.role === "admin" ? (

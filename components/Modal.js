@@ -14,6 +14,7 @@ const Modal = () => {
 
   let res;
 
+  //실패, 성공 메시지
   const message = () => {
     if (res.err)
       return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } }); //에러
@@ -25,18 +26,21 @@ const Modal = () => {
   const deleteCart = (item) => {
     dispatch(deleteItem(item.data, item.id, item.type)); //item.data중 일치id 외 나머지만 남겨두기
   };
+
   //유저 삭제
   const deleteUsers = async (item) => {
     res = await deleteData(`user/${item.id}`, auth.token);
-    dispatch(deleteItem(item.data, item.id, item.type));
+    if (res.msg) dispatch(deleteItem(item.data, item.id, item.type));
     message();
   };
+
   //카테고리 삭제
   const deleteCategories = async (item) => {
     res = await deleteData(`categories/${item.id}`, auth.token);
-    dispatch(deleteItem(item.data, item.id, item.type));
+    if (res.msg) dispatch(deleteItem(item.data, item.id, item.type));
     message();
   };
+
   //제품 삭제
   const deleteProduct = async (item) => {
     dispatch({ type: "NOTIFY", payload: { loading: true } }); //로딩
@@ -44,6 +48,7 @@ const Modal = () => {
     message();
   };
 
+  //삭제 함수 실행
   const onClickDelete = async () => {
     if (modal.length !== 0) {
       modal.forEach((item) => {
@@ -54,11 +59,8 @@ const Modal = () => {
       });
     }
 
-    // if (modal[0].type === TYPES.PRODUCT) {
     //   router.reload(window.location.pathname); //강제 새로고침 (cause server side rendering)
-    //   // router.replace(router.asPath); //not workging... 아놔 ㅜㅡㅜ..
-    //   console.log("a");
-    // }
+    //   router.replace(router.asPath); //not workging... 아놔 ㅜㅡㅜ..
 
     return dispatch({ type: TYPES.MODAL, payload: [] }); //modal 초기화
   };

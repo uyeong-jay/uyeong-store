@@ -32,7 +32,10 @@ export const DataProvider = ({ children }) => {
 
     if (firstLogin) {
       getData("auth/accessToken").then((res) => {
-        if (res.err) return localStorage.removeItem("firstLogin");
+        if (res.err) {
+          localStorage.removeItem("firstLogin"); //제거
+          return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } }); //에러
+        }
         return dispatch({
           type: TYPES.AUTH,
           payload: {
@@ -41,17 +44,18 @@ export const DataProvider = ({ children }) => {
           },
         });
       });
-
-      getData("categories").then((res) => {
-        if (res.err)
-          return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
-
-        return dispatch({
-          type: TYPES.CATEGORIES,
-          payload: res.categories,
-        });
-      });
     }
+
+    //category는 login 없이도 업데이트
+    getData("categories").then((res) => {
+      if (res.err)
+        return dispatch({ type: TYPES.NOTIFY, payload: { error: res.err } });
+
+      return dispatch({
+        type: TYPES.CATEGORIES,
+        payload: res.categories,
+      });
+    });
   }, []);
 
   //스토리지에 user_cart가 존재할시: cart정보 다시dispatch >> 새로고침시에도 유저 cart 정보 유지
