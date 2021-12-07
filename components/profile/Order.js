@@ -1,19 +1,6 @@
-import React from "react";
 import Link from "next/link";
 
 const Order = ({ order }) => {
-  // order 데이터
-  // { _id: "619248f315ba1dc07bdded38"
-  //  address: ""
-  //  mobile: ""
-  //  cart: [{…}]
-  //  user: { ~ }
-  //  totalPrice: 8
-  //  paid: false
-  //  delivered: false
-  //  createdAt: ""
-  //  updatedAt: ""
-  //  __v: 0 }
   const { _id, createdAt, totalPrice, delivered, paid } = order;
   return (
     <tr>

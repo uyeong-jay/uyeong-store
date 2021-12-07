@@ -164,16 +164,12 @@ const Home = (props) => {
 //Server Side rendering
 export async function getServerSideProps({ query }) {
   const page = query.page || 1;
-  console.log("13. page:", page);
 
   const category = query.category || "all";
-  console.log("14. category:", category);
 
   const sort = query.sort || "";
-  console.log("15. sort:", sort);
 
   const search = query.search || "all";
-  console.log("16. search:", search);
 
   const res = await getData(
     `product?limit=${
@@ -182,7 +178,7 @@ export async function getServerSideProps({ query }) {
   );
 
   // console.log(res); //서버측 렌더링이기 때문에 console이 아닌 터미널에 찍힘
-  // 17. res: {
+  // res: {
   //   status: 'success',
   //   result: 1,
   //   products: [

@@ -18,7 +18,6 @@ export const DataProvider = ({ children }) => {
     orders: [], // [ {order정보}, ... ]
     users: [], // [ {user정보}, ... ]
     categories: [], // [ {category정보}, ... ]
-    isRefreshing: false,
   };
 
   //useReducer
