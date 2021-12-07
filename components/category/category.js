@@ -1,4 +1,3 @@
-import React from "react";
 import { TYPES } from "../../store/types";
 
 const Category = ({ category, state, dispatch, onClickEditCategory }) => {

@@ -1,4 +1,3 @@
-import React from "react";
 import OrderItem from "./OrderItem";
 import PaypalBtn from "../PaypalBtn";
 import { patchData } from "../../utils/fetchData";

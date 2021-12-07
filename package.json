@@ -1,5 +1,5 @@
 {
-  "name": "next-sell-photos",
+  "name": "nextjs-uyeong-shop",
   "private": true,
   "scripts": {
     "dev": "next dev",

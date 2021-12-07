@@ -1,16 +1,12 @@
-import { useContext, useMemo } from "react";
+import { useContext } from "react";
 import { DataContext } from "../store/globalState";
 import { deleteItem } from "../store/actions";
 import { TYPES } from "../store/types";
 import { deleteData } from "../utils/fetchData";
-import { useRouter } from "next/router";
-const baseUrl = process.env.BASE_URL;
 
 const Modal = () => {
   const { state, dispatch } = useContext(DataContext);
   const { auth, modal } = state; // modal: { data: [], id: "", title: "" }
-
-  const router = useRouter();
 
   let res;
 

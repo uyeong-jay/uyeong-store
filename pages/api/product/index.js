@@ -24,26 +24,21 @@ class APIfeatures {
 
   //필터링 해주는 함수
   filtering() {
-    console.log("filtering 함수/");
+    ("filtering 함수/");
 
     const queryObj = { ...this.queryString };
-    console.log("1. queryObj:", queryObj);
+    "1. queryObj:", queryObj;
     //{ limit: '3', category: 'all', sort: '', title: 'all' }
 
     const excludeFields = ["page", "sort", "limit"];
     excludeFields.forEach((el) => delete queryObj[el]);
-    console.log("2. excludeFields:", excludeFields);
     //[ 'page', 'sort', 'limit' ]
 
     if (queryObj.category !== "all")
       this.query.find({ category: queryObj.category });
-    console.log("2-1 queryObj.category:", queryObj.category);
-    //queryObj.category: all
 
     if (queryObj.title !== "all")
       this.query.find({ title: { $regex: queryObj.title } });
-    console.log("2-2 queryObj.title:", queryObj.title);
-    //queryObj.title: all
 
     this.query.find();
     return this;
@@ -51,33 +46,26 @@ class APIfeatures {
 
   //정렬해주는 함수
   sorting() {
-    console.log("sorting 함수/");
+    ("sorting 함수/");
 
     if (this.queryString.sort) {
-      console.log("4. this.queryString.sort:", this.queryString.sort);
-
       const sortBy = this.queryString.sort.split(",").join("");
-      console.log("5. sortBy:", sortBy);
 
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort("-createdAt");
-      //7. this.query: Query { ~ }
     }
     return this;
   }
 
   //페이지 매기는 함수
   paginating() {
-    console.log("paginating 함수/");
+    ("paginating 함수/");
     const page = this.queryString.page * 1 || 1;
-    console.log("9. page:", page); // 1
 
     const limit = this.queryString.limit * 1 || 3;
-    console.log("10. limit:", limit); // 3
 
     const skip = (page - 1) * limit;
-    console.log("11(12). skip:", skip); // 0
 
     this.query = this.query.skip(skip).limit(limit);
     return this;
@@ -91,11 +79,11 @@ const getProducts = async (req, res) => {
       .sorting()
       .paginating();
 
-    // 12+. features(=return this): APIfeatures {
+    // features(=return this): APIfeatures {
     //   query: Query { ~ }
     //   queryString: { limit: '6', category: 'all', sort: '', title: 'all' }
     // }
-    // 12-1+. features.query: Query { ~ }
+    // features.query: Query { ~ }
 
     const products = await features.query;
     //products:

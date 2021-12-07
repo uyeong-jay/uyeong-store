@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { getData } from "../utils/fetchData";
 import { filterSearch } from "../utils/filterSearch";
 
 const Filter = ({ state }) => {
@@ -43,7 +42,7 @@ const Filter = ({ state }) => {
           value={category}
           onChange={onChangeCategory}
         >
-          <option value="all">All Products</option>
+          <option value="all">Category</option>
           {categories.map((item) => (
             <option key={item._id} value={item._id}>
               {item.name}

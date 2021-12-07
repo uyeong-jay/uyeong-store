@@ -5,16 +5,20 @@
   justify-content: center;
   margin: 20px 0;
 }
+
 .products .card {
   margin: 10px auto;
 }
+
 .products .card-img-top {
   width: 100%;
   height: 250px; /* 이미지 높이 제한 */
 }
+
 .products .card-title {
   text-overflow: ellipsis; /* 한줄: 초과된 글자 숨기기 + ... */
 }
+
 .products .card-text {
   height: 70px; /* 텍스트 높이 제한 */
   overflow: hidden;

@@ -1,8 +1,7 @@
-import React from "react";
 import Link from "next/link";
 
 const OrderItem = ({ item }) => {
-  const { _id, images, inStock, price, quantity, sold, title } = item;
+  const { _id, images, price, quantity, title } = item;
 
   return (
     <div
@@ -19,14 +18,14 @@ const OrderItem = ({ item }) => {
 
       {/* item-title */}
       <h5 className="flex-fill px-3 m-0  text-secondary">
-        <Link href={`/product/${item._id}`}>
+        <Link href={`/product/${_id}`}>
           <a>{title}</a>
         </Link>
       </h5>
 
       {/* item-price */}
       <span className="text-info m-0">
-        ${item.price} x {item.quantity} = ${item.price * item.quantity}
+        ${price} x {quantity} = ${price * quantity}
       </span>
     </div>
   );

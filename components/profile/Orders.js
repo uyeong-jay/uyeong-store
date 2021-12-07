@@ -3,24 +3,24 @@ import { DataContext } from "../../store/globalState";
 import Order from "./Order";
 
 const Orders = () => {
-  const { state, dispatch } = useContext(DataContext);
+  const { state } = useContext(DataContext);
   const { orders } = state;
 
   return (
     <>
       <h3 className="text-center text-uppercase">Orders</h3>
-      <div className="my-3 table-responsive">
+      <div className="table-responsive my-3">
         <table
           className="table-bordered table-hover w-100"
           style={{ minWidth: "600px" }}
         >
           <thead className="bg-light">
             <tr>
-              <td className="p-2">Id</td>
-              <td className="p-2">Date</td>
-              <td className="p-2">Total Price</td>
-              <td className="p-2">Delivered</td>
-              <td className="p-2">Paid</td>
+              <th className="p-2">Id</th>
+              <th className="p-2">Date</th>
+              <th className="p-2">Total Price</th>
+              <th className="p-2">Delivered</th>
+              <th className="p-2">Paid</th>
             </tr>
           </thead>
 

@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { count } from "../../store/actions";
 import { TYPES } from "../../store/types";

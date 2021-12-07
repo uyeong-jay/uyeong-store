@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Loading = () => {
   return (
     // Credit: https://dribbble.com/shots/5092176-Newton-Loader

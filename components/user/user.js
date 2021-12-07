@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { TYPES } from "../../store/types";
 
@@ -9,7 +8,7 @@ const User = ({ user, index, state, dispatch }) => {
 
   return (
     <tr>
-      <th>{index + 1}</th>
+      <th scope="row">{index + 1}</th>
       <th>{_id}</th>
       <th>
         <img
@@ -37,7 +36,7 @@ const User = ({ user, index, state, dispatch }) => {
           <i className="fas fa-times text-danger"></i>
         )}
       </th>
-      <th style={{ cursor: "pointer" }}>
+      <th>
         {/* edit_user link */}
         <Link
           href={
@@ -51,7 +50,11 @@ const User = ({ user, index, state, dispatch }) => {
           }
         >
           <a>
-            <i className="fas fa-edit text-info" title="Edit"></i>
+            <i
+              className="fas fa-edit text-info"
+              style={{ cursor: "pointer" }}
+              title="Edit"
+            ></i>
           </a>
         </Link>
 
@@ -59,6 +62,7 @@ const User = ({ user, index, state, dispatch }) => {
         {(auth.user.root && auth.user.email) !== email ? (
           <i
             className="fas fa-trash-alt text-danger ml-3"
+            style={{ cursor: "pointer" }}
             title="Remove"
             // Modal 적용
             data-toggle="modal"
