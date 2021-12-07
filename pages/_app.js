@@ -1,6 +1,6 @@
-import '../styles/globals.css';
-import Layout from '../components/Layout'; //공통 _app.js에 Layout 씌우기
-import { DataProvider } from '../store/globalState';
+import "../styles/globals.css";
+import Layout from "../components/Layout"; //공통 _app.js에 Layout 씌우기
+import { DataProvider } from "../store/globalState";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -10,6 +10,6 @@ function MyApp({ Component, pageProps }) {
       </Layout>
     </DataProvider>
   );
-};
+}
 
 export default MyApp;
