@@ -64,7 +64,7 @@ const ProductsManager = () => {
     dispatch({ type: TYPES.NOTIFY, payload: {} }); //메세지 초기화
 
     //선택한 파일들
-    const files = [...e.currentTarget.files]; //배열 >> forEach
+    const files = [...e.currentTarget.files];
 
     //파일 선택 에러
     if (files.length <= 0)
@@ -75,12 +75,12 @@ const ProductsManager = () => {
 
     files.forEach((file) => {
       //파일 크기 에러
-      if (file.size > 400 * 300)
-        return (err = "The image size must be less than 1KB.");
+      if (file.size > 1024 * 1024)
+        return (err = "The image size must be less than 1MB.");
 
-      //파일 확장자 에러 (jpg, png O)
-      if (file.type !== "image/jpg" && file.type !== "image/png")
-        return (err = "Image format is incorrect.");
+      //파일 확장자 에러 (png, jpeg, gif O)
+      if (!/^image\/(png|jpe?g|gif)$/.test(file.type))
+        return (err = `Unsupported format ${file.type}: ${file.name}`);
 
       //파일 갯수 제한
       if (imgCount < 5) {
@@ -251,7 +251,7 @@ const ProductsManager = () => {
             value={category}
             onChange={onChangeInput}
           >
-            <option value="all">All Products</option>
+            <option value="all">Category</option>
             {categories.map((item) => (
               <option key={item._id} value={item._id}>
                 {item.name}
@@ -293,8 +293,9 @@ const ProductsManager = () => {
                   {/* image */}
                   <img
                     className="img-thumbnail border-info"
+                    style={{ width: "500px" }}
                     src={image.url ? image.url : URL.createObjectURL(image)}
-                    onLoad={() => URL.revokeObjectURL(image)}
+                    onLoad={() => URL.revokeObjectURL(image)} //free some memory
                     alt={image.url}
                   />
 

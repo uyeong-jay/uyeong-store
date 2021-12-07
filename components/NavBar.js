@@ -17,7 +17,7 @@ const NavBar = () => {
     // 부트스트랩 ver 4 - navbar
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link href="/">
-        <a className="navbar-brand">UYeong-Mall</a>
+        <a className="navbar-brand">UYeong-Shop</a>
       </Link>
 
       {/* Toggle-Button*/}
@@ -77,7 +77,7 @@ const NavBar = () => {
               <li className={"nav-item" + isActive("/signin")}>
                 <Link href="/signin">
                   {/* font awesome - user (+ aria-hidden )*/}
-                  <a className="nav-link">
+                  <a className="nav-link ml-1">
                     <i className="fas fa-user" aria-hidden="true"></i> Sign in
                   </a>
                 </Link>

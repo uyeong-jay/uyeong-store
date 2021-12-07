@@ -14,16 +14,16 @@ const Users = () => {
         <title>Users</title>
       </Head>
 
-      <table className="table w-100">
-        <thead>
+      <table className="table">
+        <thead className="thead-light">
           <tr>
-            <th></th>
-            <th>ID</th>
-            <th>Avartar</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Admin</th>
-            <th>Edit/Delete</th>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Avartar</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Edit/Delete</th>
           </tr>
         </thead>
         <tbody>
