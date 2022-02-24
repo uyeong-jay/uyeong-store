@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-uyeong-shop",
+  "name": "nextjs-uyeong-store",
   "private": true,
   "scripts": {
     "dev": "next dev",
