@@ -115,7 +115,7 @@ const Signin = () => {
 
         {/* 로그인 버튼 */}
         {/* primary >> dark*/}
-        <button type="submit" className="btn btn-dark w-100">
+        <button type="submit" className="btn btn-info w-100">
           Login
         </button>
         <p className="my-2">

@@ -120,8 +120,7 @@ const Register = () => {
         </div>
 
         {/* 가입 버튼 */}
-        {/* primary >> dark*/}
-        <button type="submit" className="btn btn-primary w-100">
+        <button type="submit" className="btn btn-info w-100">
           Register
         </button>
         <p className="my-2">
