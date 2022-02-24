@@ -55,6 +55,9 @@ const Cart = () => {
 
   //결제 버튼 클릭
   const onClickPayment = async () => {
+    //로그인이 되어 있지 않으면 실행하지 않기.
+    if (!auth.user) return;
+
     //주소, 번호 기입확인
     if (!address || !mobile) {
       return dispatch({
@@ -86,6 +89,7 @@ const Cart = () => {
 
     dispatch({ type: "NOTIFY", payload: { loading: true } }); //로딩
 
+    //주문정보 전달
     postData("order", { address, mobile, cart, totalPrice }, auth.token).then(
       (res) => {
         //console.log(res); >> { msg: "", newOrder: {user, address, mobile, cart, totalPrice} }
@@ -95,8 +99,6 @@ const Cart = () => {
             type: TYPES.NOTIFY,
             payload: { error: res.err },
           }); //에러 메세지
-
-        dispatch({ type: TYPES.CART, payload: [] }); //카트 비우기
 
         const newOrder = {
           ...res.newOrder,
@@ -114,7 +116,10 @@ const Cart = () => {
         }); //주문 성공 메세지
 
         //새로 주문한 상품 페이지로 리다이렉트
-        return router.push(`/order/${res.newOrder._id}`);
+        router.push(`/order/${res.newOrder._id}`);
+
+        if (res.newOrder._id)
+          return dispatch({ type: TYPES.CART, payload: [] }); //카트 비우기
       }
     );
   };
