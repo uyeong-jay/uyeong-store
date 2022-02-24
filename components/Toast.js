@@ -8,7 +8,7 @@ const Toast = ({ onClickClose, msg, bgColor }) => {
         position: "fixed",
         top: "5px",
         right: "5px",
-        zIndex: 9,
+        zIndex: 8,
         minWidth: "280px",
       }}
     >
