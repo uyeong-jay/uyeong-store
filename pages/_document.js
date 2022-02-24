@@ -22,10 +22,10 @@ class MyDocument extends Document {
           ></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
-          {/* Font Awesome 5 Intro */}
+          {/* My Font Awesome kit */}
           <script
-            src="https://kit.fontawesome.com/a076d05399.js"
-            crossOrigin="anonymous"
+            src="https://kit.fontawesome.com/be6607f32b.js"
+            crossorigin="anonymous"
           ></script>
 
           {/* Paypal checkout - https://developer.paypal.com/docs/checkout/integrate/ */}
