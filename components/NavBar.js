@@ -17,7 +17,7 @@ const NavBar = () => {
     // 부트스트랩 ver 4 - navbar
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link href="/">
-        <a className="navbar-brand">UYeong-Shop</a>
+        <a className="navbar-brand">UYeong-Store</a>
       </Link>
 
       {/* Toggle-Button*/}

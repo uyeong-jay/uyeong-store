@@ -8,7 +8,7 @@ class MyDocument extends Document {
     return (
       <Html leng="en">
         <Head>
-          <meta name="desciption" content="Sell-photos website with Next.js" />
+          <meta name="desciption" content="UYeong store with Next.js" />
 
           {/* bootstrap ver 4 - CSS, Jquery, JS */}
           <link
