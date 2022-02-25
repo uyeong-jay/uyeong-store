@@ -19,8 +19,8 @@
 
 #### Home, Detail
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689489/uyeongs-store-readme/user-home_c0dc3b.png" width="300px" height="250px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/user-view_jfflw8.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689489/uyeongs-store-readme/user-home_c0dc3b.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/user-view_jfflw8.png" width="350px" height="300px">
 
 - Home
   - home, cart, sign in 버튼 > 각 페이지로 이동
@@ -39,8 +39,8 @@
 
 #### Sign in, Register
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689486/uyeongs-store-readme/user-login_xxrhxr.png" width="300px" height="250px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-register_omruxd.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689486/uyeongs-store-readme/user-login_xxrhxr.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-register_omruxd.png" width="350px" height="300px">
 
 - Sign in
   - login 버튼 > 로그인 성공, 실패 메세지
@@ -56,8 +56,8 @@
 
 #### Cart, Empty cart
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/user-cart_vnvzvr.png" width="300px" height="250px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-nocart_ua7khs.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/user-cart_vnvzvr.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-nocart_ua7khs.png" width="350px" height="300px">
 
 - Cart
   - quantity 버튼 > quantity +,- / price +,-
@@ -71,7 +71,7 @@
 
 #### Profile
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-profile_rms622.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-profile_rms622.png" width="350px" height="300px">
 
 - Profile
   - profile 사진 변경
@@ -82,9 +82,9 @@
 
 #### Order(Delivery, Payment, Paypal)
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-paypal_mqbywp.png" width="230px" height="170px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-order_pjmgxp.png" width="230px" height="170px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/user-payment_ngcctl.png" width="230px" height="170px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-paypal_mqbywp.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/user-order_pjmgxp.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/user-payment_ngcctl.png" width="350px" height="300px">
 
 - Order
   - order item, price 확인
@@ -97,8 +97,8 @@
 
 #### Home, Create or Edit
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-home_nzjfbv.png" width="300px" height="250px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-create_rcoado.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-home_nzjfbv.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-create_rcoado.png" width="350px" height="300px">
 
 - Home
   - check box(select, all) > delete, delete all 버튼 > 삭제
@@ -115,8 +115,8 @@
 
 #### Users, Categories
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-users_oaxwj9.png" width="300px" height="250px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/admin-categories_ewdtjq.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-users_oaxwj9.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689487/uyeongs-store-readme/admin-categories_ewdtjq.png" width="350px" height="300px">
 
 - Users
   - user목록, user 관리(수정, 삭제)
@@ -130,8 +130,8 @@
 
 #### Toast, Delivery
 
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689489/uyeongs-store-readme/admin-toast_er9yvt.png" width="300px" height="250px">
-<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-deliver_zjyiwa.png" width="300px" height="250px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689489/uyeongs-store-readme/admin-toast_er9yvt.png" width="350px" height="300px">
+<img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-deliver_zjyiwa.png" width="350px" height="300px">
 
 - Toast
   - 제거, 수정시 해당 상품에 대한 toast msg 띄우기
