@@ -101,7 +101,7 @@
 <img src="https://res.cloudinary.com/uyeong/image/upload/v1645689488/uyeongs-store-readme/admin-create_rcoado.png" width="350px" height="300px">
 
 - Home
-  - check box(select, all) > delete, delete all 버튼 > 삭제
+  - check box(select, select all) > delete, delete all 버튼 > 삭제
   - edit 버튼 > edit 페이지
 
 <br>
